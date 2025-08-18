@@ -188,7 +188,7 @@ interface PrefetchStrategy {
           <div class="pattern-example">
             <h4>🔄 Route Data Resolver with Signals</h4>
             <div class="code-example">
-              <pre><code>// Route resolver returning observable
+              <pre ngNonBindable><code>// Route resolver returning observable
 const routeData$ = this.route.data.pipe(
   switchMap(data => this.dataService.load(data.id))
 );
@@ -204,7 +204,7 @@ isDataReady = computed(() => !!this.routeDataSignal());</code></pre>
           <div class="pattern-example">
             <h4>🚀 Intelligent Prefetching</h4>
             <div class="code-example">
-              <pre><code>// Hover-based prefetching
+              <pre ngNonBindable><code>// Hover-based prefetching
 @HostListener('mouseenter')
 onHover() {
   this.prefetchService.prefetch(this.routerLink);
@@ -221,7 +221,7 @@ ngAfterViewInit() {
           <div class="pattern-example">
             <h4>💾 Route Data Caching</h4>
             <div class="code-example">
-              <pre><code>// Cache-first strategy with signals
+              <pre ngNonBindable><code>// Cache-first strategy with signals
 cachedData = signal(new Map());
 
 loadData(id: string) {
