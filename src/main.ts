@@ -1,3 +1,4 @@
+import "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideStore } from "@ngrx/store";
