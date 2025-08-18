@@ -11,6 +11,7 @@
           "builder": "@angular/build:application",
           "configurations": {
             "development": {
+              "aot": true,
               "extractLicenses": false,
               "namedChunks": true,
               "optimization": false,
