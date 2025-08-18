@@ -231,6 +231,7 @@ loadData(id: string) {
   }
   
   return this.http.get(\`/api/data/\${id}\`).pipe(
+  return this.http.get(&#96;/api/data/&#36;{{ '{' }}id{{ '}' }}&#96;).pipe(
     tap(data => this.updateCache(id, data))
   );
 }</code></pre>
