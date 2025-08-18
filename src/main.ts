@@ -10,6 +10,10 @@ import { RxJSDemoComponent } from "./components/rxjs-demo.component";
 import { WebComponentsDemoComponent } from "./components/web-components-demo.component";
 import { PerformanceDemoComponent } from "./components/performance-demo.component";
 import { AccessibilityDemoComponent } from "./components/accessibility-demo.component";
+import { FormsSignalsDemoComponent } from "./components/forms-signals-demo.component";
+import { SSRHydrationDemoComponent } from "./components/ssr-hydration-demo.component";
+import { RouterSignalsDemoComponent } from "./components/router-signals-demo.component";
+import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.component";
 
 @Component({
   selector: "app-root",
@@ -22,14 +26,18 @@ import { AccessibilityDemoComponent } from "./components/accessibility-demo.comp
     WebComponentsDemoComponent,
     PerformanceDemoComponent,
     AccessibilityDemoComponent,
+    FormsSignalsDemoComponent,
+    SSRHydrationDemoComponent,
+    RouterSignalsDemoComponent,
+    PerformanceLabDemoComponent,
   ],
   template: `
     <div class="showcase-app">
       <header class="app-header">
         <h1>🚀 Angular Modern Patterns Showcase</h1>
         <p class="subtitle">
-          Comprehensive examples: Signals, NgRx, RxJS, Web Components,
-          Performance & Accessibility
+          Comprehensive examples: Signals, NgRx, RxJS, Web Components, Forms,
+          SSR, Router, Performance Lab & Accessibility
         </p>
 
         <nav class="quick-nav">
@@ -67,6 +75,22 @@ import { AccessibilityDemoComponent } from "./components/accessibility-demo.comp
 
         <section id="accessibility" class="showcase-section">
           <app-accessibility-demo></app-accessibility-demo>
+        </section>
+
+        <section id="forms-signals" class="showcase-section">
+          <app-forms-signals-demo></app-forms-signals-demo>
+        </section>
+
+        <section id="ssr-hydration" class="showcase-section">
+          <app-ssr-hydration-demo></app-ssr-hydration-demo>
+        </section>
+
+        <section id="router-signals" class="showcase-section">
+          <app-router-signals-demo></app-router-signals-demo>
+        </section>
+
+        <section id="performance-lab" class="showcase-section">
+          <app-performance-lab-demo></app-performance-lab-demo>
         </section>
       </main>
 
@@ -106,6 +130,30 @@ import { AccessibilityDemoComponent } from "./components/accessibility-demo.comp
               <h4>♿ Accessibility</h4>
               <p>
                 Semantic HTML first, roving tabindex, visible focus, Axe testing
+              </p>
+            </div>
+            <div class="takeaway-card">
+              <h4>📝 Forms + Signals</h4>
+              <p>
+                Typed models, derived validity, real-time validation with signals
+              </p>
+            </div>
+            <div class="takeaway-card">
+              <h4>🚀 SSR & Hydration</h4>
+              <p>
+                Platform detection, consistent rendering, performance optimization
+              </p>
+            </div>
+            <div class="takeaway-card">
+              <h4>🧭 Router + Signals</h4>
+              <p>
+                Signal-based routing, prefetch strategies, performance monitoring
+              </p>
+            </div>
+            <div class="takeaway-card">
+              <h4>⚡ Performance Lab</h4>
+              <p>
+                Render strategy comparison, real-time metrics, optimization techniques
               </p>
             </div>
           </div>
@@ -288,6 +336,10 @@ export class App implements OnInit {
     { id: "web-components", title: "Web Components", icon: "🧩" },
     { id: "performance", title: "Performance", icon: "⚡" },
     { id: "accessibility", title: "Accessibility", icon: "♿" },
+    { id: "forms-signals", title: "Forms + Signals", icon: "📝" },
+    { id: "ssr-hydration", title: "SSR & Hydration", icon: "🚀" },
+    { id: "router-signals", title: "Router + Signals", icon: "🧭" },
+    { id: "performance-lab", title: "Performance Lab", icon: "⚡" },
   ];
 
   activeSection = "signals";

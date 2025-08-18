@@ -4,7 +4,7 @@ A comprehensive demonstration of cutting-edge Angular patterns and best practice
 
 ## 🎯 What's Inside
 
-This showcase demonstrates real-world implementations of modern Angular patterns that every developer should know. Each section is interactive and includes detailed explanations of the underlying concepts.
+This showcase demonstrates real-world implementations of modern Angular patterns that every developer should know. Each section is interactive and includes detailed explanations of the underlying concepts. Now featuring **10 comprehensive demos** covering everything from basic patterns to advanced optimization techniques!
 
 ### 🎯 Signals Demo: Fine-grained Local Reactivity
 **Location:** `src/components/signals-demo.component.ts`
@@ -46,6 +46,82 @@ See NgRx in action with a complete user and todo management system:
 - Create and toggle todos with user assignment
 - Real-time statistics and filtering
 - Redux DevTools integration for debugging
+
+### 📝 Forms + Signals Demo: Typed Models & Derived Validity
+**Location:** `src/components/forms-signals-demo.component.ts`
+
+Master modern form patterns with Angular's reactive forms and signals integration:
+
+- 📋 **Typed Form Models** - Strongly typed interfaces for complex form structures
+- 🔄 **Signal Integration** - Converting form streams to signals with `toSignal()`
+- ✅ **Derived Validity** - Real-time validation state computed from form changes
+- 📊 **Live Dashboard** - Performance metrics and validation progress tracking
+- 🎯 **Field-level Validation** - Individual field status with custom error messages
+- 💾 **Form State Management** - Tracking touched, dirty, and validation states
+
+**Interactive Features:**
+- Multi-section form with personal info, preferences, and address
+- Real-time validation with visual feedback
+- Form data preview with live JSON updates
+- Validation progress tracking and metrics
+- Sample data filling and form reset functionality
+
+### 🚀 SSR & Hydration Demo: Pitfalls Checklist
+**Location:** `src/components/ssr-hydration-demo.component.ts`
+
+Navigate the complexities of server-side rendering and hydration:
+
+- 🌐 **Platform Detection** - Proper use of `isPlatformBrowser()` and `PLATFORM_ID`
+- 🔍 **Hydration Checklist** - Comprehensive checklist of common SSR pitfalls
+- ⚡ **Performance Monitoring** - Track hydration time and performance metrics
+- 🛠️ **Issue Demonstrations** - Live examples of common SSR problems and solutions
+- 📊 **Status Dashboard** - Real-time monitoring of SSR/hydration health
+- 🎯 **Best Practices** - Categorized guidelines for SEO, performance, and accessibility
+
+**Key Patterns:**
+- Safe localStorage/sessionStorage access
+- Preventing hydration mismatches
+- Browser-only content handling
+- Meta tag management for SEO
+- Error boundary implementation
+
+### 🧭 Router + Signals Demo: Data & Prefetch Strategies
+**Location:** `src/components/router-signals-demo.component.ts`
+
+Advanced routing patterns with signals and intelligent prefetching:
+
+- 🧭 **Signal-based Routing** - Converting router observables to signals
+- 📊 **Navigation Analytics** - Track route performance and user behavior
+- 🚀 **Prefetch Strategies** - Hover, viewport, and predictive prefetching
+- 💾 **Route Data Caching** - Intelligent caching with cache hit rate monitoring
+- ⚡ **Performance Tracking** - Monitor navigation speed and optimization
+- 🎯 **Advanced Patterns** - Route resolvers, data loading, and error handling
+
+**Interactive Features:**
+- Simulated route navigation with performance metrics
+- Multiple prefetch strategies with real-time status
+- Cache management and hit rate tracking
+- Navigation history and timing analysis
+- Code examples for advanced router patterns
+
+### ⚡ Performance Lab: Render Strategies at Scale
+**Location:** `src/components/performance-lab-demo.component.ts`
+
+Comprehensive performance testing and optimization laboratory:
+
+- 🧪 **Strategy Comparison** - Side-by-side testing of render strategies
+- 📊 **Real-time Metrics** - Live performance monitoring and FPS tracking
+- 🎛️ **Interactive Testing** - Configurable test scenarios with different scales
+- 📈 **Performance Charts** - Visual representation of performance data
+- 🔬 **Detailed Analysis** - Memory usage, render time, and change detection cycles
+- 🎯 **Optimization Guide** - Comprehensive strategies for different use cases
+
+**Testing Scenarios:**
+- Default change detection vs OnPush vs Signals vs Virtual Scrolling
+- Scalability testing from 1K to 25K items
+- Memory usage and FPS monitoring
+- Interactive stress testing
+- Real-world performance recommendations
 
 ### 🌊 RxJS Demo: Complex Async Composition
 **Location:** `src/components/rxjs-demo.component.ts`
@@ -127,7 +203,11 @@ src/
 │   ├── rxjs-demo.component.ts
 │   ├── web-components-demo.component.ts
 │   ├── performance-demo.component.ts
-│   └── accessibility-demo.component.ts
+│   ├── accessibility-demo.component.ts
+│   ├── forms-signals-demo.component.ts
+│   ├── ssr-hydration-demo.component.ts
+│   ├── router-signals-demo.component.ts
+│   └── performance-lab-demo.component.ts
 ├── store/               # NgRx state management
 │   ├── app.state.ts     # Actions, reducers, initial state
 │   └── app.selectors.ts # Memoized selectors
@@ -173,6 +253,26 @@ After exploring this showcase, you'll understand:
 ### 🎯 When to Use Signals vs NgRx
 - **Signals**: Fine-grained local reactivity, component state, derived calculations
 - **NgRx**: App-wide state, complex side effects, time-travel debugging
+
+### 📝 Modern Form Patterns
+- **Typed Models**: Strongly typed form interfaces with nested structures
+- **Signal Integration**: Real-time form state with `toSignal()` conversion
+- **Derived Validation**: Computed validation states and progress tracking
+
+### 🚀 SSR & Hydration Mastery
+- **Platform Safety**: Proper browser/server code separation
+- **Hydration Optimization**: Preventing mismatches and performance issues
+- **SEO Excellence**: Meta tags, structured data, and search optimization
+
+### 🧭 Advanced Routing
+- **Signal-based Navigation**: Converting router streams to reactive signals
+- **Intelligent Prefetching**: Multiple strategies for optimal performance
+- **Performance Monitoring**: Track and optimize navigation performance
+
+### ⚡ Performance Laboratory
+- **Strategy Comparison**: Empirical testing of different render approaches
+- **Real-time Monitoring**: Live performance metrics and optimization
+- **Scalability Testing**: Performance characteristics at different scales
 
 ### 🌊 RxJS Best Practices
 - Managing backpressure with operators
@@ -231,6 +331,18 @@ This repository accompanies a comprehensive article series on modern Angular pat
 
 ### 🎯 Signals vs NgRx
 Use Signals for fine-grained local reactivity; NgRx for app-wide state and complex effects
+
+### 📝 Forms + Signals Integration
+Combine reactive forms with signals for real-time validation and type safety
+
+### 🚀 SSR & Hydration Excellence
+Master platform detection, consistent rendering, and performance optimization
+
+### 🧭 Router Performance Optimization
+Implement intelligent prefetching and signal-based navigation patterns
+
+### ⚡ Performance Strategy Selection
+Choose the right render strategy based on empirical testing and use case analysis
 
 ### 🌊 When to Use RxJS
 External streams, backpressure handling, multicasting, complex async composition
