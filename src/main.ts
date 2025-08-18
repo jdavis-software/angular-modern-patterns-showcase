@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { bootstrapApplication } from "@angular/platform-browser-dynamic";
+import { bootstrapApplication } from "@angular/platform-browser";
 import { provideStore } from "@ngrx/store";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { CommonModule } from "@angular/common";
