@@ -1,0 +1,1 @@
+angular-modern-patterns-showcase
