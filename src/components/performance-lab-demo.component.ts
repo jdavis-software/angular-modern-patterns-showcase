@@ -324,7 +324,7 @@ interface TestItem {
                 <div class="item-content">
                   <div class="item-name">{{ item.name }}</div>
                   <div class="item-details">
-                    <span class="item-value">${{ item.value | number:'1.0-0' }}</span>
+                    <span class="item-value">\${{ item.value | number:'1.0-0' }}</span>
                     <span class="item-category">{{ item.category }}</span>
                   </div>
                 </div>
