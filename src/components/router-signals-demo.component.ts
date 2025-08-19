@@ -677,6 +677,9 @@ export class RouterSignalsDemoComponent implements OnInit {
 
   prefetchCache = signal<Record<string, {data: any, timestamp: Date, size: number}>>({});
 
+  // Stable time signal to prevent ExpressionChangedAfterItHasBeenCheckedError
+  currentTimeForDisplay = signal(Date.now());
+
   // Convert router events to signals (moved to class property for proper injection context)
   private navigationEnd$ = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd),
@@ -707,6 +710,11 @@ export class RouterSignalsDemoComponent implements OnInit {
     setTimeout(() => {
       this.simulateNavigation({ id: 'dashboard', title: 'Dashboard' });
     }, 500);
+
+    // Update display time every second to prevent expression changed errors
+    setInterval(() => {
+      this.currentTimeForDisplay.set(Date.now());
+    }, 1000);
   }
 
   simulateNavigation(route: {id: string, title: string}) {
@@ -833,7 +841,7 @@ export class RouterSignalsDemoComponent implements OnInit {
   }
 
   getAgeString(timestamp: Date): string {
-    const seconds = Math.floor((Date.now() - timestamp.getTime()) / 1000);
+    const seconds = Math.floor((this.currentTimeForDisplay() - timestamp.getTime()) / 1000);
     if (seconds < 60) return `${seconds}s ago`;
     const minutes = Math.floor(seconds / 60);
     if (minutes < 60) return `${minutes}m ago`;
