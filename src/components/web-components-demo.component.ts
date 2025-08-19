@@ -8,7 +8,6 @@ import { LucideAngularModule, Puzzle } from 'lucide-angular';
   imports: [CommonModule, LucideAngularModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <div class="web-components-demo">
       <h2><lucide-icon [img]="PuzzleIcon" size="24"></lucide-icon> Web Components Demo: Angular Elements & Custom Elements</h2>
       
       <div class="demo-section">

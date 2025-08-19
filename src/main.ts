@@ -3,7 +3,6 @@ import { Component, OnInit } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideStore } from "@ngrx/store";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
-import { provideLucideIcons } from "lucide-angular";
 import { CommonModule } from "@angular/common";
 import { 
   Home, 
@@ -460,20 +459,6 @@ bootstrapApplication(App, {
       autoPause: true,
       trace: false,
       traceLimit: 75,
-    }),
-    provideLucideIcons({ 
-      Home, 
-      Zap, 
-      Database, 
-      Waves, 
-      Puzzle, 
-      Gauge, 
-      Accessibility, 
-      FileText, 
-      Server, 
-      Route, 
-      BarChart3, 
-      Target 
     }),
   ],
 });
