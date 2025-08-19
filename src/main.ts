@@ -407,7 +407,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 })
 export class App implements OnInit {
   activeSection = "home";
-  TargetIcon = Target;
+  public TargetIcon = Target;
 
   sections: { id: string; title: string; icon: any }[] = [
     { id: "home", title: "Home", icon: Home },
