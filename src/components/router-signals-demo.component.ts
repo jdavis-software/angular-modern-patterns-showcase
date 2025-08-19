@@ -677,6 +677,14 @@ export class RouterSignalsDemoComponent implements OnInit {
 
   prefetchCache = signal<Record<string, {data: any, timestamp: Date, size: number}>>({});
 
+  // Convert router events to signals (moved to class property for proper injection context)
+  private navigationEnd$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    map(event => event as NavigationEnd)
+  );
+  
+  private navigationSignal = toSignal(this.navigationEnd$, { initialValue: null });
+
   // Computed values
   cacheHitRate = computed(() => {
     const history = this.navigationHistory();
@@ -695,15 +703,6 @@ export class RouterSignalsDemoComponent implements OnInit {
   });
 
   ngOnInit() {
-    // Convert router events to signals
-    const navigationEnd$ = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(event => event as NavigationEnd)
-    );
-
-    // Track navigation changes
-    toSignal(navigationEnd$, { initialValue: null });
-
     // Initialize with dashboard
     setTimeout(() => {
       this.simulateNavigation({ id: 'dashboard', title: 'Dashboard' });

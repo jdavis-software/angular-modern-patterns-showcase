@@ -1161,15 +1161,18 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
   private chartData: { time: number; renderTime: number; fps: number; memory: number }[] = [];
   private chartContext?: CanvasRenderingContext2D;
 
+  constructor() {
+    // Effect to update metrics when monitoring (moved to constructor for proper injection context)
+    effect(() => {
+      if (this.isMonitoring()) {
+        this.updateMetrics();
+      }
+    });
+  }
+
   ngOnInit() {
     this.generateTestData();
   }
-  // Effect to update metrics when monitoring (moved to class property for proper injection context)
-  private monitoringEffect = effect(() => {
-    if (this.isMonitoring()) {
-      this.updateMetrics();
-    }
-  });
 
   ngAfterViewInit() {
     this.initializeChart();
