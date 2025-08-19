@@ -177,7 +177,23 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
           </div>
         </section>
       </main>
+    </div>
+  `,
+  styles: [
+    `
+      .showcase-app {
+        display: flex;
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
 
+      .sidebar-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
         color: white;
         overflow-y: auto;
         z-index: 1000;
@@ -286,6 +302,8 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 
       .footer-content h3 {
         text-align: center;
+      }
+
       @media (max-width: 768px) {
         .sidebar-nav {
           width: 100%;
