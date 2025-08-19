@@ -467,57 +467,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
         }
       }
     `,
-  ],
-})
-export class App implements OnInit {
-  sections = [
-    { id: "signals", title: "Signals", icon: "🎯" },
-    { id: "ngrx", title: "NgRx", icon: "🏪" },
-    { id: "rxjs", title: "RxJS", icon: "🌊" },
-    { id: "web-components", title: "Web Components", icon: "🧩" },
-    { id: "performance", title: "Performance", icon: "⚡" },
-    { id: "accessibility", title: "Accessibility", icon: "♿" },
-    { id: "forms-signals", title: "Forms + Signals", icon: "📝" },
-    { id: "ssr-hydration", title: "SSR & Hydration", icon: "🚀" },
-    { id: "router-signals", title: "Router + Signals", icon: "🧭" },
-    { id: "performance-lab", title: "Performance Lab", icon: "⚡" },
-    { id: "key-takeaways", title: "Key Takeaways", icon: "🎯" },
-  ];
-
-  activeSection = "signals";
-
-  ngOnInit() {
-    // Set up intersection observer for active section tracking
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            this.activeSection = entry.target.id;
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    setTimeout(() => {
-      this.sections.forEach((section) => {
-        const element = document.getElementById(section.id);
-        if (element) {
-          observer.observe(element);
-        }
-      });
-    }, 1000);
-  }
-
-  scrollToSection(sectionId: string) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }
+    `
     .key-takeaways-section {
       padding: 20px;
       max-width: 1200px;
@@ -574,7 +524,58 @@ export class App implements OnInit {
       line-height: 1.6;
       color: #000;
     }
+    `,
+  ],
+})
+export class App implements OnInit {
+  sections = [
+    { id: "signals", title: "Signals", icon: "🎯" },
+    { id: "ngrx", title: "NgRx", icon: "🏪" },
+    { id: "rxjs", title: "RxJS", icon: "🌊" },
+    { id: "web-components", title: "Web Components", icon: "🧩" },
+    { id: "performance", title: "Performance", icon: "⚡" },
+    { id: "accessibility", title: "Accessibility", icon: "♿" },
+    { id: "forms-signals", title: "Forms + Signals", icon: "📝" },
+    { id: "ssr-hydration", title: "SSR & Hydration", icon: "🚀" },
+    { id: "router-signals", title: "Router + Signals", icon: "🧭" },
+    { id: "performance-lab", title: "Performance Lab", icon: "⚡" },
+    { id: "key-takeaways", title: "Key Takeaways", icon: "🎯" },
+  ];
 
+  activeSection = "signals";
+
+  ngOnInit() {
+    // Set up intersection observer for active section tracking
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.activeSection = entry.target.id;
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    setTimeout(() => {
+      this.sections.forEach((section) => {
+        const element = document.getElementById(section.id);
+        if (element) {
+          observer.observe(element);
+        }
+      });
+    }, 1000);
+  }
+
+  scrollToSection(sectionId: string) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }
 }
 
 bootstrapApplication(App, {
