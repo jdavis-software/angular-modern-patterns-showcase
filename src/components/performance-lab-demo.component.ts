@@ -1335,7 +1335,7 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
     // Add to chart data
     this.chartData.push({
       time: Date.now(),
-      renderTime,
+      renderTime: simulatedRenderTime,
       fps: avgFps,
       memory: memoryUsage
     });
