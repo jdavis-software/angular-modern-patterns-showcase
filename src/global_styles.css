@@ -52,6 +52,20 @@ html {
   }
 }
 
+/* Fix icon alignment in section headers */
+h2 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+h2 lucide-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  vertical-align: middle !important;
+  flex-shrink: 0 !important;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
