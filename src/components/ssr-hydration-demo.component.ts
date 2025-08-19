@@ -1,5 +1,6 @@
-import { Component, OnInit, signal, computed, effect, PLATFORM_ID, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, effect, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { LucideAngularModule, Server } from 'lucide-angular';
 
 interface SSRChecklistItem {
   id: string;
@@ -22,10 +23,10 @@ interface PlatformInfo {
 @Component({
   selector: 'app-ssr-hydration-demo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   template: `
     <div class="ssr-hydration-demo">
-      <h2>🚀 SSR & Hydration Demo: Pitfalls Checklist</h2>
+      <h2><lucide-icon [img]="ServerIcon" size="24"></lucide-icon> SSR & Hydration Demo: Pitfalls Checklist</h2>
       
       <div class="demo-section">
         <h3>Platform Detection & Hydration Status</h3>
@@ -517,8 +518,11 @@ this.renderer.setStyle(this.elementRef.nativeElement, 'color', 'red');</code></p
     }
   `]
 })
-export class SSRHydrationDemoComponent implements OnInit {
+export class SSRHydrationDemoComponent implements OnInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
+  ServerIcon = Server;
+
+  private timeIntervalId?: ReturnType<typeof setInterval>;
   private hydrationStartTime = Date.now();
 
   // Signal for stable time display to prevent ExpressionChangedAfterItHasBeenCheckedError
@@ -668,7 +672,7 @@ export class SSRHydrationDemoComponent implements OnInit {
       }, 1000);
 
       // Update time display every second to prevent ExpressionChangedAfterItHasBeenCheckedError
-      setInterval(() => {
+      this.timeIntervalId = setInterval(() => {
         this.currentTimeDisplay.set(new Date().toLocaleTimeString());
       }, 1000);
       
@@ -736,5 +740,11 @@ export class SSRHydrationDemoComponent implements OnInit {
 
   trackByItemId(index: number, item: SSRChecklistItem): string {
     return item.id;
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeIntervalId) {
+      clearInterval(this.timeIntervalId);
+    }
   }
 }

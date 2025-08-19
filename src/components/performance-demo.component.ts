@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, computed, signal, TrackByFunction } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule, Gauge } from 'lucide-angular';
 
 interface ListItem {
   id: number;
@@ -21,11 +22,11 @@ interface PerformanceMetrics {
 @Component({
   selector: 'app-performance-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="performance-demo">
-      <h2>⚡ Performance Demo: Optimization Techniques</h2>
+      <h2><lucide-icon [img]="GaugeIcon" size="24"></lucide-icon> Performance Demo: Optimization Techniques</h2>
       
       <div class="metrics-section">
         <h3>Performance Metrics</h3>
@@ -553,6 +554,7 @@ interface PerformanceMetrics {
 })
 export class PerformanceDemoComponent implements OnInit {
   // Signals for reactive state management
+  GaugeIcon = Gauge;
   items = signal<ListItem[]>([]);
   private _filterText = signal('');
   private _selectedCategory = signal('');

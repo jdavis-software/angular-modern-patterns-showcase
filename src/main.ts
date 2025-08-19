@@ -1,13 +1,28 @@
-import "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
+import { provideRouter } from "@angular/router";
 import { provideStore } from "@ngrx/store";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { CommonModule } from "@angular/common";
+import { 
+  Home, 
+  Zap, 
+  Database, 
+  Waves, 
+  Puzzle, 
+  Gauge, 
+  Accessibility, 
+  FileText, 
+  Server, 
+  Route, 
+  BarChart3, 
+  Target,
+  LucideAngularModule 
+} from "lucide-angular";
 import { appReducer } from "./store/app.state";
 import { SignalsDemoComponent } from "./components/signals-demo.component";
 import { NgRxDemoComponent } from "./components/ngrx-demo.component";
-import { RxJSDemoComponent } from "./components/rxjs-demo.component";
+import { RxjsDemoComponent } from "./components/rxjs-demo.component";
 import { WebComponentsDemoComponent } from "./components/web-components-demo.component";
 import { PerformanceDemoComponent } from "./components/performance-demo.component";
 import { AccessibilityDemoComponent } from "./components/accessibility-demo.component";
@@ -21,9 +36,10 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
   standalone: true,
   imports: [
     CommonModule,
+    LucideAngularModule,
     SignalsDemoComponent,
     NgRxDemoComponent,
-    RxJSDemoComponent,
+    RxjsDemoComponent,
     WebComponentsDemoComponent,
     PerformanceDemoComponent,
     AccessibilityDemoComponent,
@@ -47,7 +63,11 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
             [class.active]="activeSection === section.id"
             href="#{{ section.id }}"
           >
-            <span class="nav-icon">{{ section.icon }}</span>
+            <lucide-icon 
+              [img]="section.icon" 
+              class="nav-icon"
+              size="20">
+            </lucide-icon>
             <span class="nav-text">{{ section.title }}</span>
           </a>
         </div>
@@ -55,13 +75,15 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 
       <!-- Main Content Area -->
       <main class="app-main">
-        <header class="page-header">
-          <h1>Angular Modern Patterns Showcase</h1>
-          <p class="page-subtitle">
-            Comprehensive examples: Signals, NgRx, RxJS, Web Components, Forms,
-            SSR, Router, Performance Lab & Accessibility
-          </p>
-        </header>
+        <section id="home" class="showcase-section">
+          <header class="page-header">
+            <h1>Angular Modern Patterns Showcase</h1>
+            <p class="page-subtitle">
+              Comprehensive examples: Signals, NgRx, RxJS, Web Components, Forms,
+              SSR, Router, Performance Lab & Accessibility
+            </p>
+          </header>
+        </section>
 
         <section id="signals" class="showcase-section">
           <app-signals-demo></app-signals-demo>
@@ -105,7 +127,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 
         <section id="key-takeaways" class="showcase-section">
           <div class="key-takeaways-section">
-            <h2>🎯 Key Takeaways for Your Article</h2>
+            <h2><lucide-icon [img]="TargetIcon" size="24"></lucide-icon> Key Takeaways for Your Article</h2>
             <div class="takeaways-grid">
               <div class="takeaway-card">
                 <h4>🎯 Signals vs NgRx</h4>
@@ -238,9 +260,9 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
     }
 
     .nav-icon {
-      font-size: 1.2rem;
-      width: 24px;
-      text-align: center;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
     }
 
     .nav-text {
@@ -276,6 +298,22 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 
     .showcase-section {
       margin: 0;
+    }
+
+    .showcase-section:not(:last-child) {
+      border-bottom: 3px solid #e9ecef;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+    }
+
+    .showcase-section:not(:last-child)::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      margin: 30px auto 0;
+      border-radius: 2px;
     }
 
     .key-takeaways-section {
@@ -368,25 +406,27 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
   `]
 })
 export class App implements OnInit {
-  activeSection = "signals";
+  activeSection = "home";
+  public TargetIcon = Target;
 
-  sections: { id: string; title: string; icon: string }[] = [
-    { id: "signals", title: "Signals", icon: "📶" },
-    { id: "ngrx", title: "NgRx", icon: "⚡" },
-    { id: "rxjs", title: "RxJS", icon: "🔄" },
-    { id: "web-components", title: "Web Components", icon: "🧩" },
-    { id: "performance", title: "Performance", icon: "🚀" },
-    { id: "accessibility", title: "Accessibility", icon: "♿" },
-    { id: "forms-signals", title: "Forms + Signals", icon: "📝" },
-    { id: "ssr-hydration", title: "SSR & Hydration", icon: "💧" },
-    { id: "router-signals", title: "Router + Signals", icon: "🧭" },
-    { id: "performance-lab", title: "Performance Lab", icon: "⚙️" },
-    { id: "key-takeaways", title: "Key Takeaways", icon: "🎯" },
+  sections: { id: string; title: string; icon: any }[] = [
+    { id: "home", title: "Home", icon: Home },
+    { id: "signals", title: "Signals", icon: Zap },
+    { id: "ngrx", title: "NgRx", icon: Database },
+    { id: "rxjs", title: "RxJS", icon: Waves },
+    { id: "web-components", title: "Web Components", icon: Puzzle },
+    { id: "performance", title: "Performance", icon: Gauge },
+    { id: "accessibility", title: "Accessibility", icon: Accessibility },
+    { id: "forms-signals", title: "Forms + Signals", icon: FileText },
+    { id: "ssr-hydration", title: "SSR & Hydration", icon: Server },
+    { id: "router-signals", title: "Router + Signals", icon: Route },
+    { id: "performance-lab", title: "Performance Lab", icon: BarChart3 },
+    { id: "key-takeaways", title: "Key Takeaways", icon: Target },
   ];
 
   ngOnInit() {
-    // Ensure we start at the top with signals active
-    this.activeSection = "signals";
+    // Ensure we start at the top with home active
+    this.activeSection = "home";
     
     // Set up intersection observer for active section tracking
     // Delay observer setup to prevent initial triggering
@@ -427,9 +467,9 @@ export class App implements OnInit {
     }
   }
 }
-
 bootstrapApplication(App, {
   providers: [
+    provideRouter([]),
     provideStore({ app: appReducer }),
     provideStoreDevtools({
       maxAge: 25,

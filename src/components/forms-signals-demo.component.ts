@@ -1,8 +1,9 @@
 import { Component, computed, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
+import { LucideAngularModule, FileText } from 'lucide-angular';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, startWith, combineLatest } from 'rxjs';
+import { startWith } from 'rxjs';
 
 interface UserFormModel {
   personalInfo: {
@@ -35,10 +36,10 @@ interface FormValidationState {
 @Component({
   selector: 'app-forms-signals-demo',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LucideAngularModule],
   template: `
     <div class="forms-signals-demo">
-      <h2>📝 Forms + Signals Demo: Typed Models & Derived Validity</h2>
+      <h2><lucide-icon [img]="FileTextIcon" size="24"></lucide-icon> Forms + Signals Demo: Typed Models & Derived Validity</h2>
       
       <div class="demo-section">
         <h3>Real-time Form Validation Dashboard</h3>
@@ -484,28 +485,40 @@ interface FormValidationState {
       border-radius: 4px;
       font-size: 14px;
       transition: all 0.2s;
+      background: white;
+      color: #000;
     }
 
     .form-input:focus, .form-select:focus {
       outline: none;
       border-color: #007bff;
       box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      background: white;
+      color: #000;
     }
 
     .form-input.error, .form-select.error {
       border-color: #dc3545;
+      background: white;
+      color: #000;
     }
 
     .form-input.error:focus, .form-select.error:focus {
       box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+      background: white;
+      color: #000;
     }
 
     .form-input.success, .form-select.success {
       border-color: #28a745;
+      background: white;
+      color: #000;
     }
 
     .form-input.success:focus, .form-select.success:focus {
       box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+      background: white;
+      color: #000;
     }
 
     .checkbox-field {
@@ -623,6 +636,7 @@ interface FormValidationState {
 })
 export class FormsSignalsDemoComponent {
   // Typed reactive form
+  FileTextIcon = FileText;
   userForm = new FormGroup({
     personalInfo: new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),

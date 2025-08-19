@@ -1,6 +1,7 @@
-import { Component, OnInit, computed, signal, effect, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, computed, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
+import { LucideAngularModule, Route } from 'lucide-angular';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, switchMap, delay, of, catchError, tap } from 'rxjs';
 
@@ -32,10 +33,10 @@ interface PrefetchStrategy {
 @Component({
   selector: 'app-router-signals-demo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   template: `
     <div class="router-signals-demo">
-      <h2>🧭 Router + Signals Demo: Data & Prefetch Strategies</h2>
+      <h2><lucide-icon [img]="RouteIcon" size="24"></lucide-icon> Router + Signals Demo: Data & Prefetch Strategies</h2>
       
       <div class="demo-section">
         <h3>Navigation State & Performance</h3>
@@ -623,8 +624,11 @@ interface PrefetchStrategy {
     }
   `]
 })
-export class RouterSignalsDemoComponent implements OnInit {
+export class RouterSignalsDemoComponent implements OnInit, OnDestroy {
   private router = inject(Router);
+  RouteIcon = Route;
+
+  private timeIntervalId?: ReturnType<typeof setInterval>;
 
   // Navigation state signals
   navigationState = signal<NavigationState>({
@@ -711,7 +715,7 @@ export class RouterSignalsDemoComponent implements OnInit {
     }, 500);
 
     // Update display time every second to prevent expression changed errors
-    setInterval(() => {
+    this.timeIntervalId = setInterval(() => {
       this.currentTimeForDisplay.set(Date.now());
     }, 1000);
   }
@@ -846,5 +850,11 @@ export class RouterSignalsDemoComponent implements OnInit {
     if (minutes < 60) return `${minutes}m ago`;
     const hours = Math.floor(minutes / 60);
     return `${hours}h ago`;
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeIntervalId) {
+      clearInterval(this.timeIntervalId);
+    }
   }
 }
