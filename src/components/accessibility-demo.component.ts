@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -848,7 +848,7 @@ interface TabItem {
     }
   `]
 })
-export class AccessibilityDemoComponent implements OnInit, AfterViewInit {
+export class AccessibilityDemoComponent implements OnInit {
   @ViewChild('modalContent') modalContent!: ElementRef;
   @ViewChild('modalCloseButton') modalCloseButton!: ElementRef;
   @ViewChild('modalInput') modalInput!: ElementRef;
@@ -922,16 +922,6 @@ export class AccessibilityDemoComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     // Initialize with some sample messages
     this.addStatusMessage('info');
-  }
-
-  ngAfterViewInit() {
-    // Set initial focus on first menu item
-    setTimeout(() => {
-      const firstMenuItem = document.querySelector('.menu-item') as HTMLElement;
-      if (firstMenuItem) {
-        firstMenuItem.focus();
-      }
-    }, 100);
   }
 
   // Form validation
