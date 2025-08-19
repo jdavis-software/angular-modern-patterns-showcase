@@ -14,6 +14,7 @@ interface CartItem {
   selector: 'app-signals-demo',
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule],
+  template: `
     <div class="signals-demo">
       <h2><lucide-icon [img]="ZapIcon" size="24"></lucide-icon> Signals Demo: Fine-grained Local Reactivity</h2>
       
