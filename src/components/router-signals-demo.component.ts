@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, switchMap, delay, of, catchError, tap } from 'rxjs';
 
@@ -176,64 +176,6 @@ interface PrefetchStrategy {
                 <span class="cache-size">{{ item.value.size }} KB</span>
                 <span class="cache-age">{{ getAgeString(item.value.timestamp) }}</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="demo-section">
-        <h3>Advanced Router Patterns</h3>
-        
-        <div class="patterns-showcase">
-          <div class="pattern-example">
-            <h4>🔄 Route Data Resolver with Signals</h4>
-            <div class="code-example">
-              <pre ngNonBindable><code>// Route resolver returning observable
-const routeData$ = this.route.data.pipe(
-  switchMap(data => this.dataService.load(data.id))
-);
-
-// Convert to signal for template use
-routeDataSignal = toSignal(routeData$, { initialValue: null });
-
-// Computed derived state
-isDataReady = computed(() => !!this.routeDataSignal());</code></pre>
-            </div>
-          </div>
-
-          <div class="pattern-example">
-            <h4>🚀 Intelligent Prefetching</h4>
-            <div class="code-example">
-              <pre ngNonBindable><code>// Hover-based prefetching
-@HostListener('mouseenter')
-onHover() {
-  this.prefetchService.prefetch(this.routerLink);
-}
-
-// Intersection observer prefetching
-@ViewChild('linkElement') linkEl!: ElementRef;
-ngAfterViewInit() {
-  this.intersectionObserver.observe(this.linkEl.nativeElement);
-}</code></pre>
-            </div>
-          </div>
-
-          <div class="pattern-example">
-            <h4>💾 Route Data Caching</h4>
-            <div class="code-example">
-              <pre ngNonBindable><code>// Cache-first strategy with signals
-cachedData = signal(new Map());
-
-loadData(id: string) {
-  const cached = this.cachedData().get(id);
-  if (cached && !this.isStale(cached)) {
-    return of(cached.data);
-  }
-  
-  return this.http.get(\`/api/data/\${id}\`).pipe(
-    tap(data => this.updateCache(id, data))
-  );
-}</code></pre>
             </div>
           </div>
         </div>
@@ -684,7 +626,6 @@ loadData(id: string) {
 })
 export class RouterSignalsDemoComponent implements OnInit {
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
 
   // Navigation state signals
   navigationState = signal<NavigationState>({
