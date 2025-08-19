@@ -1,14 +1,15 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, Puzzle } from 'lucide-angular';
 
 @Component({
   selector: 'app-web-components-demo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="web-components-demo">
-      <h2>🧩 Web Components Demo: Angular Elements & Custom Elements</h2>
+      <h2><lucide-icon [img]="PuzzleIcon" size="24"></lucide-icon> Web Components Demo: Angular Elements & Custom Elements</h2>
       
       <div class="demo-section">
         <h3>Native Custom Elements</h3>
@@ -292,6 +293,7 @@ import { CommonModule } from '@angular/common';
 })
 export class WebComponentsDemoComponent {
   toggleStates: Record<string, boolean> = {
+  PuzzleIcon = Puzzle;
     notifications: false,
     darkmode: true
   };

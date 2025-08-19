@@ -1,6 +1,7 @@
 import { Component, computed, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
+import { LucideAngularModule, FileText } from 'lucide-angular';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, startWith, combineLatest } from 'rxjs';
 
@@ -35,10 +36,10 @@ interface FormValidationState {
 @Component({
   selector: 'app-forms-signals-demo',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LucideAngularModule],
   template: `
     <div class="forms-signals-demo">
-      <h2>📝 Forms + Signals Demo: Typed Models & Derived Validity</h2>
+      <h2><lucide-icon [img]="FileTextIcon" size="24"></lucide-icon> Forms + Signals Demo: Typed Models & Derived Validity</h2>
       
       <div class="demo-section">
         <h3>Real-time Form Validation Dashboard</h3>
@@ -623,6 +624,7 @@ interface FormValidationState {
 })
 export class FormsSignalsDemoComponent {
   // Typed reactive form
+  FileTextIcon = FileText;
   userForm = new FormGroup({
     personalInfo: new FormGroup({
       firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),

@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, computed, signal, effect, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule, BarChart3 } from 'lucide-angular';
 
 interface PerformanceTest {
   id: string;
@@ -45,11 +46,11 @@ interface TestItem {
 @Component({
   selector: 'app-performance-lab-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="performance-lab-demo">
-      <h2>⚡ Performance Lab: Render Strategies at Scale</h2>
+      <h2><lucide-icon [img]="BarChart3Icon" size="24"></lucide-icon> Performance Lab: Render Strategies at Scale</h2>
       
       <div class="demo-section">
         <h3>Performance Test Suite</h3>
@@ -956,6 +957,7 @@ interface TestItem {
 })
 export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
+  BarChart3Icon = BarChart3;
   @ViewChild('performanceChart') performanceChart!: ElementRef;
 
   // Test configuration

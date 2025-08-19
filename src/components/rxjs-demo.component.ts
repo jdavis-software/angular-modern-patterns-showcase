@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule, Waves } from 'lucide-angular';
 import { fromEvent, interval, merge, Subject, BehaviorSubject } from 'rxjs';
 import { 
   map, 
@@ -26,10 +27,10 @@ interface WebSocketMessage {
 @Component({
   selector: 'app-rxjs-demo',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   template: `
     <div class="rxjs-demo">
-      <h2>🌊 RxJS Demo: Complex Async Composition</h2>
+      <h2><lucide-icon [img]="WavesIcon" size="24"></lucide-icon> RxJS Demo: Complex Async Composition</h2>
       
       <div class="demo-section">
         <h3>Real-time WebSocket Simulation</h3>
@@ -373,6 +374,7 @@ interface WebSocketMessage {
 })
 export class RxJSDemoComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  WavesIcon = Waves;
   private webSocketSubject = new BehaviorSubject<WebSocketMessage | null>(null);
   private mockWebSocketInterval?: any;
 

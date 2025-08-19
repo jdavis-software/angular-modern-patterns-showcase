@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule, Accessibility } from 'lucide-angular';
 
 interface MenuItem {
   id: string;
@@ -20,10 +21,10 @@ interface TabItem {
 @Component({
   selector: 'app-accessibility-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   template: `
     <div class="accessibility-demo">
-      <h2>♿ Accessibility Demo: A11y Best Practices</h2>
+      <h2><lucide-icon [img]="AccessibilityIcon" size="24"></lucide-icon> Accessibility Demo: A11y Best Practices</h2>
       
       <div class="demo-section">
         <h3>Semantic HTML & ARIA</h3>
@@ -850,6 +851,7 @@ interface TabItem {
 })
 export class AccessibilityDemoComponent implements OnInit {
   @ViewChild('modalContent') modalContent!: ElementRef;
+  AccessibilityIcon = Accessibility;
   @ViewChild('modalCloseButton') modalCloseButton!: ElementRef;
   @ViewChild('modalInput') modalInput!: ElementRef;
 

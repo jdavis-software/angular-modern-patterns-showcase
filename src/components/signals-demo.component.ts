@@ -1,6 +1,7 @@
 import { Component, computed, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule, Zap } from 'lucide-angular';
 
 interface CartItem {
   id: string;
@@ -12,10 +13,9 @@ interface CartItem {
 @Component({
   selector: 'app-signals-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
   template: `
     <div class="signals-demo">
-      <h2>🎯 Signals Demo: Fine-grained Local Reactivity</h2>
+      <h2><lucide-icon [img]="ZapIcon" size="24"></lucide-icon> Signals Demo: Fine-grained Local Reactivity</h2>
       
       <div class="cart-section">
         <h3>Shopping Cart</h3>
@@ -251,6 +251,8 @@ interface CartItem {
   `]
 })
 export class SignalsDemoComponent {
+  ZapIcon = Zap;
+
   // Signals for fine-grained local reactivity
   cartItems = signal<CartItem[]>([]);
   newItemName = '';

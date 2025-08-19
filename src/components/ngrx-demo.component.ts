@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule, Database } from 'lucide-angular';
 import { Store } from '@ngrx/store';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { 
@@ -21,10 +22,10 @@ import { User, Todo } from '../types';
 @Component({
   selector: 'app-ngrx-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   template: `
     <div class="ngrx-demo">
-      <h2>🏪 NgRx Demo: App-wide State Management</h2>
+      <h2><lucide-icon [img]="DatabaseIcon" size="24"></lucide-icon> NgRx Demo: App-wide State Management</h2>
       
       <div class="demo-section">
         <h3>Users Management</h3>
@@ -341,6 +342,7 @@ import { User, Todo } from '../types';
 })
 export class NgRxDemoComponent {
   private store = inject(Store);
+  DatabaseIcon = Database;
 
   // Bridge NgRx selectors to signals for template ergonomics
   users = toSignal(this.store.select(selectUsers), { initialValue: [] });
