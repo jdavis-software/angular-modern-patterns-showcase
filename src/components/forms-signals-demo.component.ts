@@ -661,6 +661,10 @@ export class FormsSignalsDemoComponent {
 
   // Computed validation state
   formValidation = computed(() => {
+    // Force reactivity by depending on form status and data signals
+    const currentStatus = this.formStatus();
+    const currentData = this.formData();
+    
     const form = this.userForm;
     const allControls = this.getAllControls(form);
     const totalControls = allControls.length;
