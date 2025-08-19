@@ -1,7 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Puzzle } from 'lucide-angular';
-import { registerCustomElements } from '../custom-elements/register';
 
 @Component({
   selector: 'app-web-components-demo',
@@ -348,13 +347,272 @@ custom-card::part(content) {
   padding: 20px;
 }`;
 
-  constructor(@Inject(PLATFORM_ID) private pid: Object) {
-    if (isPlatformBrowser(this.pid)) {
-      registerCustomElements();
-    }
+  constructor() {
+    this.defineCustomElements();
   }
 
   onToggleChange(id: string, event: any) {
     this.toggleStates[id] = event.detail.checked;
+  }
+
+  private defineCustomElements() {
+    // Define custom progress ring
+    if (!customElements.get('custom-progress-ring')) {
+      customElements.define('custom-progress-ring', class extends HTMLElement {
+        static get observedAttributes() {
+          return ['value', 'max', 'size', 'stroke-width', 'color'];
+        }
+
+        connectedCallback() {
+          this.render();
+        }
+
+        attributeChangedCallback() {
+          this.render();
+        }
+
+        render() {
+          const value = parseInt(this.getAttribute('value') || '0');
+          const max = parseInt(this.getAttribute('max') || '100');
+          const size = parseInt(this.getAttribute('size') || '100');
+          const strokeWidth = parseInt(this.getAttribute('stroke-width') || '4');
+          const color = this.getAttribute('color') || '#007bff';
+
+          const radius = (size - strokeWidth) / 2;
+          const circumference = radius * 2 * Math.PI;
+          const progress = (value / max) * circumference;
+
+          this.innerHTML = `
+            <svg width="${size}" height="${size}" style="transform: rotate(-90deg);">
+              <circle
+                cx="${size / 2}"
+                cy="${size / 2}"
+                r="${radius}"
+                stroke="#e0e0e0"
+                stroke-width="${strokeWidth}"
+                fill="none"
+              />
+              <circle
+                cx="${size / 2}"
+                cy="${size / 2}"
+                r="${radius}"
+                stroke="${color}"
+                stroke-width="${strokeWidth}"
+                fill="none"
+                stroke-dasharray="${circumference}"
+                stroke-dashoffset="${circumference - progress}"
+                stroke-linecap="round"
+                style="transition: stroke-dashoffset 0.3s ease;"
+              />
+              <text
+                x="${size / 2}"
+                y="${size / 2}"
+                text-anchor="middle"
+                dy="0.3em"
+                font-family="Arial, sans-serif"
+                font-size="${size * 0.15}"
+                fill="${color}"
+                style="transform: rotate(90deg); transform-origin: ${size / 2}px ${size / 2}px;"
+              >${value}%</text>
+            </svg>
+          `;
+        }
+      });
+    }
+
+    // Define custom card
+    if (!customElements.get('custom-card')) {
+      customElements.define('custom-card', class extends HTMLElement {
+        connectedCallback() {
+          const shadow = this.attachShadow({ mode: 'open' });
+          
+          const title = this.getAttribute('title') || '';
+          const subtitle = this.getAttribute('subtitle') || '';
+          const theme = this.getAttribute('theme') || 'default';
+
+          shadow.innerHTML = `
+            <style>
+              :host {
+                display: block;
+                --primary-color: #007bff;
+                --secondary-color: #6c757d;
+                --success-color: #28a745;
+                --warning-color: #ffc107;
+                --danger-color: #dc3545;
+              }
+
+              .card {
+                background: var(--card-bg, #ffffff);
+                border: 1px solid var(--card-border, #e0e0e0);
+                border-radius: var(--card-radius, 8px);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                overflow: hidden;
+                transition: box-shadow 0.2s ease;
+              }
+
+              .card:hover {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+              }
+
+              .header {
+                padding: 16px;
+                border-bottom: 1px solid var(--card-border, #e0e0e0);
+                background: var(--header-bg, #f8f9fa);
+              }
+
+              .header.primary { background: var(--primary-color); color: white; }
+              .header.secondary { background: var(--secondary-color); color: white; }
+              .header.success { background: var(--success-color); color: white; }
+              .header.warning { background: var(--warning-color); color: black; }
+              .header.danger { background: var(--danger-color); color: white; }
+
+              .title {
+                margin: 0 0 4px 0;
+                font-size: 1.25rem;
+                font-weight: 600;
+              }
+
+              .subtitle {
+                margin: 0;
+                font-size: 0.875rem;
+                opacity: 0.8;
+              }
+
+              .content {
+                padding: 16px;
+              }
+
+              .actions {
+                padding: 12px 16px;
+                background: var(--actions-bg, #f8f9fa);
+                border-top: 1px solid var(--card-border, #e0e0e0);
+              }
+
+              ::slotted(.card-button) {
+                margin-right: 8px;
+              }
+            </style>
+            <div class="card">
+              <div class="header ${theme}" part="header">
+                <h3 class="title">${title}</h3>
+                ${subtitle ? `<p class="subtitle">${subtitle}</p>` : ''}
+              </div>
+              <div class="content" part="content">
+                <slot name="content"></slot>
+              </div>
+              <div class="actions" part="actions">
+                <slot name="actions"></slot>
+              </div>
+            </div>
+          `;
+        }
+      });
+    }
+
+    // Define custom toggle
+    if (!customElements.get('custom-toggle')) {
+      customElements.define('custom-toggle', class extends HTMLElement {
+        static get observedAttributes() {
+          return ['checked', 'disabled'];
+        }
+
+        connectedCallback() {
+          const shadow = this.attachShadow({ mode: 'open' });
+          
+          shadow.innerHTML = `
+            <style>
+              :host {
+                display: inline-block;
+                --toggle-width: 50px;
+                --toggle-height: 24px;
+                --toggle-bg: #ccc;
+                --toggle-bg-checked: #007bff;
+                --toggle-thumb: #fff;
+              }
+
+              .toggle {
+                position: relative;
+                width: var(--toggle-width);
+                height: var(--toggle-height);
+                background: var(--toggle-bg);
+                border-radius: calc(var(--toggle-height) / 2);
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+                border: none;
+                outline: none;
+              }
+
+              .toggle:focus {
+                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+              }
+
+              .toggle.checked {
+                background: var(--toggle-bg-checked);
+              }
+
+              .toggle.disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+              }
+
+              .thumb {
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: calc(var(--toggle-height) - 4px);
+                height: calc(var(--toggle-height) - 4px);
+                background: var(--toggle-thumb);
+                border-radius: 50%;
+                transition: transform 0.2s ease;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+              }
+
+              .toggle.checked .thumb {
+                transform: translateX(calc(var(--toggle-width) - var(--toggle-height)));
+              }
+            </style>
+            <button class="toggle" part="toggle">
+              <div class="thumb" part="thumb"></div>
+            </button>
+          `;
+
+          const toggle = shadow.querySelector('.toggle');
+          toggle?.addEventListener('click', () => this.handleToggle());
+          
+          this.updateState();
+        }
+
+        attributeChangedCallback() {
+          this.updateState();
+        }
+
+        handleToggle() {
+          if (this.hasAttribute('disabled')) return;
+          
+          const isChecked = this.hasAttribute('checked');
+          if (isChecked) {
+            this.removeAttribute('checked');
+          } else {
+            this.setAttribute('checked', '');
+          }
+
+          // Dispatch custom event
+          this.dispatchEvent(new CustomEvent('toggle', {
+            detail: { checked: !isChecked },
+            bubbles: true
+          }));
+        }
+
+        updateState() {
+          const shadow = this.shadowRoot;
+          const toggle = shadow?.querySelector('.toggle');
+          
+          if (toggle) {
+            toggle.classList.toggle('checked', this.hasAttribute('checked'));
+            toggle.classList.toggle('disabled', this.hasAttribute('disabled'));
+          }
+        }
+      });
+    }
   }
 }

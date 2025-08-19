@@ -1,17 +1,19 @@
-import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef, inject, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule, Waves } from 'lucide-angular';
-import { fromEvent, interval, Subject, BehaviorSubject, Subscription } from 'rxjs';
-import {
-  map,
-  filter,
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
+import { fromEvent, interval, merge, Subject, BehaviorSubject } from 'rxjs';
+import { 
+  map, 
+  filter, 
+  debounceTime, 
+  distinctUntilChanged, 
+  switchMap, 
   takeUntil,
   scan,
+  share,
   throttleTime,
-  buffer
+  buffer,
+  tap
 } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -370,15 +372,11 @@ interface WebSocketMessage {
     }
   `]
 })
-export class RxjsDemoComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('mouseArea', { static: true }) mouseArea!: ElementRef<HTMLDivElement>;
-  @ViewChild('searchInput', { static: true }) searchInput!: ElementRef<HTMLInputElement>;
-
+export class RxJSDemoComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   WavesIcon = Waves;
   private webSocketSubject = new BehaviorSubject<WebSocketMessage | null>(null);
-  private mockWebSocketInterval?: ReturnType<typeof setInterval>;
-  private wsSub?: Subscription;
+  private mockWebSocketInterval?: any;
 
   // Signals from RxJS streams
   isConnected = signal(false);
@@ -390,7 +388,7 @@ export class RxjsDemoComponent implements AfterViewInit, OnDestroy {
   searchResults = signal<string[]>([]);
   lastSearchTerm = signal('');
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.setupDOMEventStreams();
     this.setupSearchStream();
   }
@@ -405,7 +403,7 @@ export class RxjsDemoComponent implements AfterViewInit, OnDestroy {
     if (this.isConnected()) return;
 
     this.isConnected.set(true);
-
+    
     // Simulate WebSocket messages
     this.mockWebSocketInterval = setInterval(() => {
       const messageTypes: WebSocketMessage['type'][] = ['user_joined', 'user_left', 'message', 'typing'];
@@ -422,8 +420,7 @@ export class RxjsDemoComponent implements AfterViewInit, OnDestroy {
     }, Math.random() * 1000 + 500); // Random interval between 500-1500ms
 
     // Buffer messages every 2 seconds and convert to signal
-    this.wsSub?.unsubscribe();
-    this.wsSub = this.webSocketSubject.pipe(
+    this.webSocketSubject.pipe(
       filter(msg => msg !== null),
       buffer(interval(2000)),
       filter(batch => batch.length > 0),
@@ -443,57 +440,64 @@ export class RxjsDemoComponent implements AfterViewInit, OnDestroy {
     this.isConnected.set(false);
     if (this.mockWebSocketInterval) {
       clearInterval(this.mockWebSocketInterval);
-      this.mockWebSocketInterval = undefined;
+      this.mockWebSocketInterval = null;
     }
-    this.wsSub?.unsubscribe();
-    this.wsSub = undefined;
     this.messageBatches.set([]);
     this.messageCount.set(0);
   }
 
   private setupDOMEventStreams() {
-    const mouseArea = this.mouseArea.nativeElement;
-    fromEvent<MouseEvent>(mouseArea, 'mousemove').pipe(
-      throttleTime(100),
-      map(event => {
-        const rect = (event.target as Element).getBoundingClientRect();
-        return {
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top
-        };
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe(position => {
-      this.mousePosition.set(position);
-    });
+    // Mouse movement with throttling
+    const mouseArea = document.querySelector('.mouse-tracker');
+    if (mouseArea) {
+      fromEvent<MouseEvent>(mouseArea, 'mousemove').pipe(
+        throttleTime(100), // Limit to 10 updates per second
+        map(event => {
+          const rect = (event.target as Element).getBoundingClientRect();
+          return {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+          };
+        }),
+        takeUntil(this.destroy$)
+      ).subscribe(position => {
+        this.mousePosition.set(position);
+      });
 
-    fromEvent(mouseArea, 'click').pipe(
-      scan(count => count + 1, 0),
-      takeUntil(this.destroy$)
-    ).subscribe(count => {
-      this.clickCount.set(count);
-    });
+      // Click counting
+      fromEvent(mouseArea, 'click').pipe(
+        scan(count => count + 1, 0),
+        takeUntil(this.destroy$)
+      ).subscribe(count => {
+        this.clickCount.set(count);
+      });
 
-    fromEvent(mouseArea, 'dblclick').pipe(
-      scan(count => count + 1, 0),
-      takeUntil(this.destroy$)
-    ).subscribe(count => {
-      this.doubleClickCount.set(count);
-    });
+      // Double click detection
+      fromEvent(mouseArea, 'dblclick').pipe(
+        scan(count => count + 1, 0),
+        takeUntil(this.destroy$)
+      ).subscribe(count => {
+        this.doubleClickCount.set(count);
+      });
+    }
   }
 
   private setupSearchStream() {
-    const searchInput = this.searchInput.nativeElement;
-    fromEvent(searchInput, 'input').pipe(
-      map((event: Event) => (event.target as HTMLInputElement).value),
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(term => this.performSearch(term)),
-      takeUntil(this.destroy$)
-    ).subscribe(({ term, results }) => {
-      this.lastSearchTerm.set(term);
-      this.searchResults.set(results);
-    });
+    setTimeout(() => {
+      const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+      if (searchInput) {
+        fromEvent(searchInput, 'input').pipe(
+          map((event: any) => event.target.value),
+          debounceTime(300),
+          distinctUntilChanged(),
+          switchMap(term => this.performSearch(term)),
+          takeUntil(this.destroy$)
+        ).subscribe(({ term, results }) => {
+          this.lastSearchTerm.set(term);
+          this.searchResults.set(results);
+        });
+      }
+    }, 100);
   }
 
   private performSearch(term: string): Promise<{ term: string; results: string[] }> {

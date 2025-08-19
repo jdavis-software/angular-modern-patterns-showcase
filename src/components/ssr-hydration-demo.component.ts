@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal, computed, effect, PLATFORM_ID, inject } from '@angular/core';
+import { Component, OnInit, signal, computed, effect, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { LucideAngularModule, Server } from 'lucide-angular';
 
@@ -518,11 +518,9 @@ this.renderer.setStyle(this.elementRef.nativeElement, 'color', 'red');</code></p
     }
   `]
 })
-export class SSRHydrationDemoComponent implements OnInit, OnDestroy {
+export class SSRHydrationDemoComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
   ServerIcon = Server;
-
-  private timeIntervalId?: ReturnType<typeof setInterval>;
   private hydrationStartTime = Date.now();
 
   // Signal for stable time display to prevent ExpressionChangedAfterItHasBeenCheckedError
@@ -672,7 +670,7 @@ export class SSRHydrationDemoComponent implements OnInit, OnDestroy {
       }, 1000);
 
       // Update time display every second to prevent ExpressionChangedAfterItHasBeenCheckedError
-      this.timeIntervalId = setInterval(() => {
+      setInterval(() => {
         this.currentTimeDisplay.set(new Date().toLocaleTimeString());
       }, 1000);
       
@@ -740,11 +738,5 @@ export class SSRHydrationDemoComponent implements OnInit, OnDestroy {
 
   trackByItemId(index: number, item: SSRChecklistItem): string {
     return item.id;
-  }
-
-  ngOnDestroy(): void {
-    if (this.timeIntervalId) {
-      clearInterval(this.timeIntervalId);
-    }
   }
 }
