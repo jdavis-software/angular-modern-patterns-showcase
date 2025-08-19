@@ -93,8 +93,7 @@ interface CartItem {
   styles: [`
     .signals-demo {
       padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
+      width: 100%;
     }
 
     .cart-section {

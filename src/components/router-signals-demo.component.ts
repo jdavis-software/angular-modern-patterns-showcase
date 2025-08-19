@@ -199,8 +199,7 @@ interface PrefetchStrategy {
   styles: [`
     .router-signals-demo {
       padding: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
+      width: 100%;
     }
 
     .demo-section {
