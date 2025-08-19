@@ -385,29 +385,33 @@ export class App implements OnInit {
   ];
 
   ngOnInit() {
+    // Ensure we start at the top with signals active
+    this.activeSection = "signals";
+    
     // Set up intersection observer for active section tracking
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            this.activeSection = entry.target.id;
-          }
-        });
-      },
-      { 
-        threshold: 0.3,
-        rootMargin: '-10% 0px -70% 0px' // Only trigger when section is near the top
-      }
-    );
-
+    // Delay observer setup to prevent initial triggering
     setTimeout(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              this.activeSection = entry.target.id;
+            }
+          });
+        },
+        { 
+          threshold: 0.3,
+          rootMargin: '-10% 0px -70% 0px'
+        }
+      );
+
       this.sections.forEach((section) => {
         const element = document.getElementById(section.id);
         if (element) {
           observer.observe(element);
         }
       });
-    }, 100);
+    }, 2000); // Longer delay to prevent initial auto-scrolling
   }
 
   scrollToSection(sectionId: string) {
