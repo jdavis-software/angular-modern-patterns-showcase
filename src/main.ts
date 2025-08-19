@@ -415,6 +415,9 @@ export class App implements OnInit {
   }
 
   scrollToSection(sectionId: string) {
+    // Update active section immediately when clicked
+    this.activeSection = sectionId;
+    
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
