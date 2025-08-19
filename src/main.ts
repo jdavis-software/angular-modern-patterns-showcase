@@ -34,26 +34,35 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
   ],
   template: `
     <div class="showcase-app">
-      <header class="app-header">
-        <h1>🚀 Angular Modern Patterns Showcase</h1>
-        <p class="subtitle">
-          Comprehensive examples: Signals, NgRx, RxJS, Web Components, Forms,
-          SSR, Router, Performance Lab & Accessibility
-        </p>
-
-        <nav class="quick-nav">
-          <button
-            *ngFor="let section of sections; let i = index"
+      <!-- Left Sidebar Navigation -->
+      <nav class="sidebar-nav">
+        <div class="sidebar-header">
+          <h2>🚀 Angular Patterns</h2>
+        </div>
+        <div class="nav-sections">
+          <a
+            *ngFor="let section of sections"
             (click)="scrollToSection(section.id)"
-            class="nav-button"
+            class="nav-link"
             [class.active]="activeSection === section.id"
+            href="#{{ section.id }}"
           >
-            {{ section.icon }} {{ section.title }}
-          </button>
-        </nav>
-      </header>
+            <span class="nav-icon">{{ section.icon }}</span>
+            <span class="nav-text">{{ section.title }}</span>
+          </a>
+        </div>
+      </nav>
 
+      <!-- Main Content Area -->
       <main class="app-main">
+        <header class="page-header">
+          <h1>Angular Modern Patterns Showcase</h1>
+          <p class="page-subtitle">
+            Comprehensive examples: Signals, NgRx, RxJS, Web Components, Forms,
+            SSR, Router, Performance Lab & Accessibility
+          </p>
+        </header>
+
         <section id="signals" class="showcase-section">
           <app-signals-demo></app-signals-demo>
         </section>
@@ -173,73 +182,106 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
   styles: [
     `
       .showcase-app {
+        display: flex;
         min-height: 100vh;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       }
 
-      .app-header {
+      .sidebar-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        background: #2c3e50;
+        color: white;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .sidebar-header {
+        padding: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: #34495e;
+      }
+
+      .sidebar-header h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+
+      .nav-sections {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        color: #ecf0f1;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-left: 3px solid transparent;
+      }
+
+      .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-left-color: #3498db;
+      }
+
+      .nav-link.active {
+        background: rgba(52, 152, 219, 0.2);
+        border-left-color: #3498db;
+        color: #3498db;
+      }
+
+      .nav-icon {
+        font-size: 1.2rem;
+        margin-right: 12px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .nav-text {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .app-main {
+        margin-left: 280px;
+        flex: 1;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      .page-header {
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
-        padding: 30px 20px;
+        padding: 40px 20px;
         text-align: center;
         box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 100;
+        margin-bottom: 0;
       }
 
-      .app-header h1 {
-        margin: 0 0 10px 0;
+      .page-header h1 {
+        margin: 0 0 15px 0;
         color: #333;
         font-size: 2.5rem;
         font-weight: 700;
       }
 
-      .subtitle {
+      .page-subtitle {
         color: #495057;
         font-size: 1.1rem;
-        margin: 0 0 30px 0;
+        margin: 0;
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
         line-height: 1.5;
-      }
-
-      .quick-nav {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-
-      .nav-button {
-        padding: 10px 20px;
-        background: #f8f9fa;
-        border: 2px solid #e9ecef;
-        border-radius: 25px;
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        color: #495057;
-      }
-
-      .nav-button:hover {
-        background: #e9ecef;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-
-      .nav-button.active {
-        background: #007bff;
-        color: white;
-        border-color: #007bff;
-      }
-
-      .app-main {
-        padding: 0;
       }
 
       .showcase-section {
@@ -305,21 +347,41 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
       }
 
       @media (max-width: 768px) {
-        .app-header h1 {
+        .sidebar-nav {
+          width: 100%;
+          height: auto;
+          position: relative;
+        }
+
+        .app-main {
+          margin-left: 0;
+        }
+
+        .nav-sections {
+          flex-direction: row;
+          overflow-x: auto;
+          padding: 10px;
+        }
+
+        .nav-link {
+          flex-shrink: 0;
+          padding: 8px 12px;
+          border-left: none;
+          border-bottom: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+          border-left: none;
+          border-bottom-color: #3498db;
+        }
+
+        .page-header h1 {
           font-size: 2rem;
         }
 
-        .subtitle {
+        .page-subtitle {
           font-size: 1rem;
-        }
-
-        .quick-nav {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .nav-button {
-          width: 200px;
         }
 
         .takeaways-grid {
