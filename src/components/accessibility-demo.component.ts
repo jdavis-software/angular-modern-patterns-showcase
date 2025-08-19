@@ -393,6 +393,18 @@ interface TabItem {
       border-radius: 4px;
       font-size: 16px;
       transition: border-color 0.2s, box-shadow 0.2s;
+      background: white !important;
+      color: #000 !important;
+    }
+
+    /* Override any global dark mode styles */
+    input[type="text"], 
+    input[type="email"], 
+    input[type="number"],
+    select {
+      background: white !important;
+      color: #000 !important;
+      border: 2px solid #ddd !important;
     }
 
     .form-input:focus {

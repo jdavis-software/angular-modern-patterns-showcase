@@ -244,14 +244,6 @@ a:focus {
     color: black;
   }
   
-  .form-input {
-    background: #2d2d2d;
-    border-color: #404040;
-    color: black;
-  }
-  
-  .form-input:focus {
-    border-color: #4dabf7;
-    box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.25);
-  }
+  /* Remove dark mode form input styles to prevent black backgrounds */
+  /* Components will handle their own input styling */
 }
