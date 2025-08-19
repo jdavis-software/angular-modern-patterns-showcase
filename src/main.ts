@@ -177,9 +177,9 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
           </div>
         </section>
       </main>
-
-    }
-
+    </div>
+  `,
+  styles: [`
     .key-takeaways-section .takeaway-card h4 {
       margin: 0 0 10px 0;
       color: #000;
@@ -206,7 +206,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
       line-height: 1.6;
       color: #000;
     }
-    `,
+    `
   ],
 })
 export class App implements OnInit {
