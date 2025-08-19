@@ -7,117 +7,122 @@ import { LucideAngularModule, Puzzle } from 'lucide-angular';
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  template: `
-      <h2><lucide-icon [img]="PuzzleIcon" size="24"></lucide-icon> Web Components Demo: Angular Elements & Custom Elements</h2>
+template: `
+  <div class="web-components-demo">
+    <h2>
+      <lucide-icon [img]="PuzzleIcon" size="24"></lucide-icon>
+      Web Components Demo: Angular Elements & Custom Elements
+    </h2>
+    
+    <div class="demo-section">
+      <h3>Native Custom Elements</h3>
+      <p>These are native web components that work with any framework:</p>
       
-      <div class="demo-section">
-        <h3>Native Custom Elements</h3>
-        <p>These are native web components that work with any framework:</p>
-        
-        <!-- Custom Progress Ring -->
-        <div class="component-showcase">
-          <h4>Custom Progress Ring</h4>
-          <custom-progress-ring 
-            value="75" 
-            max="100"
-            size="120"
-            stroke-width="8"
-            color="#007bff">
-          </custom-progress-ring>
-          <p>A reusable progress ring component with Shadow DOM styling</p>
-        </div>
-
-        <!-- Custom Card Component -->
-        <div class="component-showcase">
-          <h4>Custom Card Component</h4>
-          <custom-card 
-            title="Web Components" 
-            subtitle="Framework Agnostic"
-            theme="primary">
-            <p slot="content">
-              This card component uses slots for flexible content projection.
-              It demonstrates how Shadow DOM encapsulates styles while allowing
-              content composition.
-            </p>
-            <div slot="actions">
-              <button class="card-button primary">Learn More</button>
-              <button class="card-button secondary">Share</button>
-            </div>
-          </custom-card>
-        </div>
-
-        <!-- Custom Toggle Switch -->
-        <div class="component-showcase">
-          <h4>Custom Toggle Switch</h4>
-          <div class="toggle-demo">
-            <custom-toggle 
-              id="notifications"
-              (toggle)="onToggleChange('notifications', $event)">
-            </custom-toggle>
-            <label for="notifications">Enable Notifications</label>
-          </div>
-          <div class="toggle-demo">
-            <custom-toggle 
-              id="darkmode"
-              checked
-              (toggle)="onToggleChange('darkmode', $event)">
-            </custom-toggle>
-            <label for="darkmode">Dark Mode</label>
-          </div>
-          <p>Status: {{ toggleStates | json }}</p>
-        </div>
+      <!-- Custom Progress Ring -->
+      <div class="component-showcase">
+        <h4>Custom Progress Ring</h4>
+        <custom-progress-ring 
+          value="75" 
+          max="100"
+          size="120"
+          stroke-width="8"
+          color="#007bff">
+        </custom-progress-ring>
+        <p>A reusable progress ring component with Shadow DOM styling</p>
       </div>
 
-      <div class="demo-section">
-        <h3>Angular Elements Integration</h3>
-        <p>Angular components can be converted to custom elements using Angular Elements:</p>
-        
-        <div class="code-example">
-          <h4>Creating an Angular Element:</h4>
-          <pre><code>{{ angularElementCode }}</code></pre>
-        </div>
-
-        <div class="integration-notes">
-          <h4>🔍 Integration Considerations:</h4>
-          <ul>
-            <li><strong>Shadow DOM:</strong> Encapsulates styles but requires CSS custom properties for theming</li>
-            <li><strong>Event Handling:</strong> Use CustomEvent with proper TypeScript typing</li>
-            <li><strong>Slots:</strong> Enable flexible content projection patterns</li>
-            <li><strong>Lifecycle:</strong> connectedCallback, disconnectedCallback, attributeChangedCallback</li>
-            <li><strong>Focus Management:</strong> Handle focus trapping and keyboard navigation</li>
-            <li><strong>Accessibility:</strong> Ensure ARIA attributes work across Shadow DOM boundaries</li>
-          </ul>
-        </div>
+      <!-- Custom Card Component -->
+      <div class="component-showcase">
+        <h4>Custom Card Component</h4>
+        <custom-card 
+          title="Web Components" 
+          subtitle="Framework Agnostic"
+          theme="primary">
+          <p slot="content">
+            This card component uses slots for flexible content projection.
+            It demonstrates how Shadow DOM encapsulates styles while allowing
+            content composition.
+          </p>
+          <div slot="actions">
+            <button class="card-button primary">Learn More</button>
+            <button class="card-button secondary">Share</button>
+          </div>
+        </custom-card>
       </div>
 
-      <div class="demo-section">
-        <h3>Styling Strategies</h3>
-        <div class="styling-examples">
-          <div class="styling-method">
-            <h4>CSS Custom Properties (Recommended)</h4>
-            <pre><code>{{ cssCustomPropsCode }}</code></pre>
-          </div>
-          
-          <div class="styling-method">
-            <h4>Part Pseudo-element</h4>
-            <pre><code>{{ cssPartCode }}</code></pre>
-          </div>
+      <!-- Custom Toggle Switch -->
+      <div class="component-showcase">
+        <h4>Custom Toggle Switch</h4>
+        <div class="toggle-demo">
+          <custom-toggle 
+            id="notifications"
+            (toggle)="onToggleChange('notifications', $event)">
+          </custom-toggle>
+          <label for="notifications">Enable Notifications</label>
         </div>
+        <div class="toggle-demo">
+          <custom-toggle 
+            id="darkmode"
+            checked
+            (toggle)="onToggleChange('darkmode', $event)">
+          </custom-toggle>
+          <label for="darkmode">Dark Mode</label>
+        </div>
+        <p>Status: {{ toggleStates | json }}</p>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h3>Angular Elements Integration</h3>
+      <p>Angular components can be converted to custom elements using Angular Elements:</p>
+      
+      <div class="code-example">
+        <h4>Creating an Angular Element:</h4>
+        <pre ngNonBindable><code>{{ angularElementCode }}</code></pre>
       </div>
 
-      <div class="web-components-info">
-        <h4>🔍 Web Components Best Practices:</h4>
+      <div class="integration-notes">
+        <h4>🔍 Integration Considerations:</h4>
         <ul>
-          <li><strong>Shadow DOM:</strong> Use for style encapsulation, mind the styling boundaries</li>
-          <li><strong>Custom Properties:</strong> Primary method for external styling control</li>
-          <li><strong>Events:</strong> Use CustomEvent with detail typing for Angular integration</li>
-          <li><strong>Slots:</strong> Enable flexible content composition patterns</li>
-          <li><strong>Accessibility:</strong> Ensure focus management and ARIA work across boundaries</li>
-          <li><strong>Performance:</strong> Lazy load heavy components, use efficient change detection</li>
+          <li><strong>Shadow DOM:</strong> Encapsulates styles but requires CSS custom properties for theming</li>
+          <li><strong>Event Handling:</strong> Use CustomEvent with proper TypeScript typing</li>
+          <li><strong>Slots:</strong> Enable flexible content projection patterns</li>
+          <li><strong>Lifecycle:</strong> connectedCallback, disconnectedCallback, attributeChangedCallback</li>
+          <li><strong>Focus Management:</strong> Handle focus trapping and keyboard navigation</li>
+          <li><strong>Accessibility:</strong> Ensure ARIA attributes work across Shadow DOM boundaries</li>
         </ul>
       </div>
     </div>
-  `,
+
+    <div class="demo-section">
+      <h3>Styling Strategies</h3>
+      <div class="styling-examples">
+        <div class="styling-method">
+          <h4>CSS Custom Properties (Recommended)</h4>
+          <pre ngNonBindable><code>{{ cssCustomPropsCode }}</code></pre>
+        </div>
+        
+        <div class="styling-method">
+          <h4>Part Pseudo-element</h4>
+          <pre ngNonBindable><code>{{ cssPartCode }}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="web-components-info">
+      <h4>🔍 Web Components Best Practices:</h4>
+      <ul>
+        <li><strong>Shadow DOM:</strong> Use for style encapsulation, mind the styling boundaries</li>
+        <li><strong>Custom Properties:</strong> Primary method for external styling control</li>
+        <li><strong>Events:</strong> Use CustomEvent with detail typing for Angular integration</li>
+        <li><strong>Slots:</strong> Enable flexible content composition patterns</li>
+        <li><strong>Accessibility:</strong> Ensure focus management and ARIA work across boundaries</li>
+        <li><strong>Performance:</strong> Lazy load heavy components, use efficient change detection</li>
+      </ul>
+    </div>
+  </div>
+`,
+
   styles: [`
     .web-components-demo {
       padding: 20px;
