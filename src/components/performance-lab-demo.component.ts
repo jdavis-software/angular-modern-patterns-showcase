@@ -1158,6 +1158,8 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
   private monitoringInterval?: number;
   private fpsFrames: number[] = [];
   private lastFrameTime = 0;
+  private chartData: { time: number; renderTime: number; fps: number; memory: number }[] = [];
+  private chartContext?: CanvasRenderingContext2D;
 
   ngOnInit() {
     this.generateTestData();
@@ -1258,8 +1260,10 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
 
   startMonitoring() {
     this.isMonitoring.set(true);
+    this.chartData = []; // Reset chart data
     this.monitoringInterval = window.setInterval(() => {
       this.updateMetrics();
+      this.updateChart();
     }, 100);
   }
 
@@ -1294,9 +1298,12 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
       ? Math.round(this.fpsFrames.reduce((a, b) => a + b, 0) / this.fpsFrames.length)
       : 60;
 
+    const renderTime = Math.round(Math.random() * 50 + 10);
+    const memoryUsage = Math.round(((performance as any).memory?.usedJSHeapSize || 0) / 1024 / 1024);
+    
     const metrics: PerformanceMetrics = {
-      renderTime: Math.round(Math.random() * 50 + 10),
-      memoryUsage: Math.round(((performance as any).memory?.usedJSHeapSize || 0) / 1024 / 1024),
+      renderTime,
+      memoryUsage,
       fpsAverage: avgFps,
       changeDetectionCycles: Math.round(Math.random() * 10 + 1),
       domNodes: document.querySelectorAll('*').length,
@@ -1304,6 +1311,19 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
     };
 
     this.currentMetrics.set(metrics);
+    
+    // Add to chart data
+    this.chartData.push({
+      time: Date.now(),
+      renderTime,
+      fps: avgFps,
+      memory: memoryUsage
+    });
+    
+    // Keep only last 100 data points
+    if (this.chartData.length > 100) {
+      this.chartData.shift();
+    }
   }
 
   generateTestData() {
@@ -1366,19 +1386,122 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
   }
 
   private initializeChart() {
-    // Initialize performance chart (simplified for demo)
     const canvas = this.chartCanvas?.nativeElement;
     if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.fillStyle = '#f8f9fa';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#000';
-        ctx.font = '14px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Performance Chart (Real-time monitoring)', canvas.width / 2, canvas.height / 2);
-      }
+      this.chartContext = canvas.getContext('2d') || undefined;
+      this.drawChart();
     }
+  }
+  
+  private updateChart() {
+    if (this.isMonitoring()) {
+      this.drawChart();
+    }
+  }
+  
+  private drawChart() {
+    const canvas = this.chartCanvas?.nativeElement;
+    const ctx = this.chartContext;
+    
+    if (!canvas || !ctx || this.chartData.length === 0) {
+      return;
+    }
+    
+    const width = canvas.width;
+    const height = canvas.height;
+    const padding = 40;
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
+    
+    // Clear canvas
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+    
+    // Draw background grid
+    ctx.strokeStyle = '#e9ecef';
+    ctx.lineWidth = 1;
+    
+    // Vertical grid lines
+    for (let i = 0; i <= 10; i++) {
+      const x = padding + (chartWidth / 10) * i;
+      ctx.beginPath();
+      ctx.moveTo(x, padding);
+      ctx.lineTo(x, height - padding);
+      ctx.stroke();
+    }
+    
+    // Horizontal grid lines
+    for (let i = 0; i <= 5; i++) {
+      const y = padding + (chartHeight / 5) * i;
+      ctx.beginPath();
+      ctx.moveTo(padding, y);
+      ctx.lineTo(width - padding, y);
+      ctx.stroke();
+    }
+    
+    if (this.chartData.length < 2) return;
+    
+    // Draw render time line (blue)
+    ctx.strokeStyle = '#007bff';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    
+    const maxRenderTime = Math.max(...this.chartData.map(d => d.renderTime), 100);
+    
+    this.chartData.forEach((point, index) => {
+      const x = padding + (chartWidth / (this.chartData.length - 1)) * index;
+      const y = height - padding - (point.renderTime / maxRenderTime) * chartHeight;
+      
+      if (index === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    });
+    ctx.stroke();
+    
+    // Draw FPS line (green)
+    ctx.strokeStyle = '#28a745';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    
+    this.chartData.forEach((point, index) => {
+      const x = padding + (chartWidth / (this.chartData.length - 1)) * index;
+      const y = height - padding - (point.fps / 60) * chartHeight;
+      
+      if (index === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    });
+    ctx.stroke();
+    
+    // Draw labels
+    ctx.fillStyle = '#000';
+    ctx.font = '12px Arial';
+    ctx.textAlign = 'left';
+    
+    // Y-axis labels
+    ctx.fillText('100ms', 5, padding + 5);
+    ctx.fillText('50ms', 5, padding + chartHeight / 2 + 5);
+    ctx.fillText('0ms', 5, height - padding + 5);
+    
+    // Legend
+    ctx.fillStyle = '#007bff';
+    ctx.fillRect(width - 150, 20, 15, 3);
+    ctx.fillStyle = '#000';
+    ctx.fillText('Render Time', width - 130, 25);
+    
+    ctx.fillStyle = '#28a745';
+    ctx.fillRect(width - 150, 35, 15, 3);
+    ctx.fillStyle = '#000';
+    ctx.fillText('FPS', width - 130, 40);
+    
+    // Title
+    ctx.font = '14px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Real-time Performance Monitor', width / 2, 15);
   }
 
   trackByTestId(index: number, test: PerformanceTest): string {
