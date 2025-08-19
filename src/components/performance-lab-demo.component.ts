@@ -1238,9 +1238,9 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
           tests.map(t => t.id === test.id ? {
             ...t,
             status: 'completed' as const,
-            renderTime,
-            memoryUsage,
-            fpsAverage
+            renderTime: renderTime,
+            memoryUsage: memoryUsage,
+            fpsAverage: fpsAverage
           } : t)
         );
         resolve();
