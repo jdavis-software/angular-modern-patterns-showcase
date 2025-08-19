@@ -127,7 +127,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 
         <section id="key-takeaways" class="showcase-section">
           <div class="key-takeaways-section">
-            <h2>🎯 Key Takeaways for Your Article</h2>
+            <h2><lucide-icon [img]="TargetIcon" size="24"></lucide-icon> Key Takeaways for Your Article</h2>
             <div class="takeaways-grid">
               <div class="takeaway-card">
                 <h4>🎯 Signals vs NgRx</h4>
@@ -407,6 +407,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 })
 export class App implements OnInit {
   activeSection = "home";
+  TargetIcon = Target;
 
   sections: { id: string; title: string; icon: any }[] = [
     { id: "home", title: "Home", icon: Home },
