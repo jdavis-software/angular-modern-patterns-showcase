@@ -292,8 +292,9 @@ import { LucideAngularModule, Puzzle } from 'lucide-angular';
   `]
 })
 export class WebComponentsDemoComponent {
-  toggleStates: Record<string, boolean> = {
   PuzzleIcon = Puzzle;
+  
+  toggleStates: Record<string, boolean> = {
     notifications: false,
     darkmode: true
   };

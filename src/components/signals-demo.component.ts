@@ -317,3 +317,5 @@ export class SignalsDemoComponent {
     return item.id;
   }
 }
+}
+)
