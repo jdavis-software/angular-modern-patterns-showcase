@@ -240,3 +240,6 @@ bootstrapApplication(App, {
     }),
   ],
 });
+
+}
+)
