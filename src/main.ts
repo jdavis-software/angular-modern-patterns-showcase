@@ -4,20 +4,20 @@ import { provideRouter } from "@angular/router";
 import { provideStore } from "@ngrx/store";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { CommonModule } from "@angular/common";
-import { 
-  Home, 
-  Zap, 
-  Database, 
-  Waves, 
-  Puzzle, 
-  Gauge, 
-  Accessibility, 
-  FileText, 
-  Server, 
-  Route, 
-  BarChart3, 
+import {
+  Home,
+  Zap,
+  Database,
+  Waves,
+  Puzzle,
+  Gauge,
+  Accessibility,
+  FileText,
+  Server,
+  Route,
+  BarChart3,
   Target,
-  LucideAngularModule 
+  LucideAngularModule,
 } from "lucide-angular";
 import { appReducer } from "./store/app.state";
 import { SignalsDemoComponent } from "./components/signals-demo.component";
@@ -63,10 +63,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
             [class.active]="activeSection === section.id"
             href="#{{ section.id }}"
           >
-            <lucide-icon 
-              [img]="section.icon" 
-              class="nav-icon"
-              size="20">
+            <lucide-icon [img]="section.icon" class="nav-icon" size="20">
             </lucide-icon>
             <span class="nav-text">{{ section.title }}</span>
           </a>
@@ -79,8 +76,8 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
           <header class="page-header">
             <h1>Angular Modern Patterns Showcase</h1>
             <p class="page-subtitle">
-              Comprehensive examples: Signals, NgRx, RxJS, Web Components, Forms,
-              SSR, Router, Performance Lab & Accessibility
+              Comprehensive examples: Signals, NgRx, RxJS, Web Components,
+              Forms, SSR, Router, Performance Lab & Accessibility
             </p>
           </header>
         </section>
@@ -127,7 +124,10 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
 
         <section id="key-takeaways" class="showcase-section">
           <div class="key-takeaways-section">
-            <h2><lucide-icon [img]="TargetIcon" size="24"></lucide-icon> Key Takeaways for Your Article</h2>
+            <h2>
+              <lucide-icon [img]="TargetIcon" size="24"></lucide-icon> Key
+              Takeaways
+            </h2>
             <div class="takeaways-grid">
               <div class="takeaway-card">
                 <h4>🎯 Signals vs NgRx</h4>
@@ -146,8 +146,8 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
               <div class="takeaway-card">
                 <h4>🧩 Web Components</h4>
                 <p>
-                  Angular Elements for creation; mind Shadow DOM styling and event
-                  contracts
+                  Angular Elements for creation; mind Shadow DOM styling and
+                  event contracts
                 </p>
               </div>
               <div class="takeaway-card">
@@ -160,31 +160,36 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
               <div class="takeaway-card">
                 <h4>♿ Accessibility</h4>
                 <p>
-                  Semantic HTML first, roving tabindex, visible focus, Axe testing
+                  Semantic HTML first, roving tabindex, visible focus, Axe
+                  testing
                 </p>
               </div>
               <div class="takeaway-card">
                 <h4>📝 Forms + Signals</h4>
                 <p>
-                  Typed models, derived validity, real-time validation with signals
+                  Typed models, derived validity, real-time validation with
+                  signals
                 </p>
               </div>
               <div class="takeaway-card">
                 <h4>🚀 SSR & Hydration</h4>
                 <p>
-                  Platform detection, consistent rendering, performance optimization
+                  Platform detection, consistent rendering, performance
+                  optimization
                 </p>
               </div>
               <div class="takeaway-card">
                 <h4>🧭 Router + Signals</h4>
                 <p>
-                  Signal-based routing, prefetch strategies, performance monitoring
+                  Signal-based routing, prefetch strategies, performance
+                  monitoring
                 </p>
               </div>
               <div class="takeaway-card">
                 <h4>⚡ Performance Lab</h4>
                 <p>
-                  Render strategy comparison, real-time metrics, optimization techniques
+                  Render strategy comparison, real-time metrics, optimization
+                  techniques
                 </p>
               </div>
             </div>
@@ -193,7 +198,8 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
               <p>
                 💡 <strong>Pro tip:</strong> Each demo includes detailed
                 explanations and best practices. Use the browser DevTools to
-                inspect the implementation details and see the patterns in action!
+                inspect the implementation details and see the patterns in
+                action!
               </p>
             </div>
           </div>
@@ -201,209 +207,211 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
       </main>
     </div>
   `,
-  styles: [`
-    .showcase-app {
-      display: flex;
-      min-height: 100vh;
-      background: #f8f9fa;
-    }
-
-    .sidebar-nav {
-      width: 280px;
-      background: white;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-      position: fixed;
-      height: 100vh;
-      overflow-y: auto;
-      z-index: 100;
-    }
-
-    .sidebar-header {
-      padding: 20px;
-      border-bottom: 1px solid #e9ecef;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-
-    .sidebar-header h2 {
-      margin: 0;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    .nav-sections {
-      padding: 20px 0;
-    }
-
-    .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 20px;
-      color: #495057;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      border-left: 3px solid transparent;
-    }
-
-    .nav-link:hover {
-      background: #f8f9fa;
-      color: #007bff;
-      border-left-color: #007bff;
-    }
-
-    .nav-link.active {
-      background: #e3f2fd;
-      color: #1976d2;
-      border-left-color: #1976d2;
-      font-weight: 500;
-    }
-
-    .nav-icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-
-    .nav-text {
-      font-size: 0.95rem;
-    }
-
-    .app-main {
-      flex: 1;
-      margin-left: 280px;
-      padding: 0;
-    }
-
-    .page-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px;
-      text-align: center;
-    }
-
-    .page-header h1 {
-      margin: 0 0 10px 0;
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-
-    .page-subtitle {
-      margin: 0;
-      font-size: 1.1rem;
-      opacity: 0.9;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .showcase-section {
-      margin: 0;
-    }
-
-    .showcase-section:not(:last-child) {
-      border-bottom: 3px solid #e9ecef;
-      margin-bottom: 40px;
-      padding-bottom: 40px;
-    }
-
-    .showcase-section:not(:last-child)::after {
-      content: '';
-      display: block;
-      width: 100px;
-      height: 3px;
-      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-      margin: 30px auto 0;
-      border-radius: 2px;
-    }
-
-    .key-takeaways-section {
-      padding: 40px;
-      background: white;
-    }
-
-    .key-takeaways-section h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #000;
-    }
-
-    .takeaways-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .takeaway-card {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 8px;
-      border-left: 4px solid #007bff;
-      transition: transform 0.2s ease;
-    }
-
-    .takeaway-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .takeaway-card h4 {
-      margin: 0 0 10px 0;
-      color: #000;
-    }
-
-    .takeaway-card p {
-      margin: 0;
-      color: #000;
-      line-height: 1.5;
-    }
-
-    .article-note {
-      background: #e8f5e8;
-      padding: 20px;
-      border-radius: 8px;
-      border-left: 4px solid #28a745;
-      text-align: center;
-    }
-
-    .article-note p {
-      margin: 0;
-      color: #000;
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .sidebar-nav {
-        width: 100%;
-        height: auto;
-        position: relative;
+  styles: [
+    `
+      .showcase-app {
+        display: flex;
+        min-height: 100vh;
+        background: #f8f9fa;
       }
 
-      .app-main {
-        margin-left: 0;
+      .sidebar-nav {
+        width: 280px;
+        background: white;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 100;
+      }
+
+      .sidebar-header {
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .sidebar-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
       }
 
       .nav-sections {
-        display: flex;
-        overflow-x: auto;
-        padding: 10px;
+        padding: 20px 0;
       }
 
       .nav-link {
-        white-space: nowrap;
-        min-width: 120px;
-        justify-content: center;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        color: #495057;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        border-left: 3px solid transparent;
+      }
+
+      .nav-link:hover {
+        background: #f8f9fa;
+        color: #007bff;
+        border-left-color: #007bff;
+      }
+
+      .nav-link.active {
+        background: #e3f2fd;
+        color: #1976d2;
+        border-left-color: #1976d2;
+        font-weight: 500;
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+
+      .nav-text {
+        font-size: 0.95rem;
+      }
+
+      .app-main {
+        flex: 1;
+        margin-left: 280px;
+        padding: 0;
+      }
+
+      .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px;
+        text-align: center;
       }
 
       .page-header h1 {
-        font-size: 2rem;
+        margin: 0 0 10px 0;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .page-subtitle {
+        margin: 0;
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .showcase-section {
+        margin: 0;
+      }
+
+      .showcase-section:not(:last-child) {
+        border-bottom: 3px solid #e9ecef;
+        margin-bottom: 40px;
+        padding-bottom: 40px;
+      }
+
+      .showcase-section:not(:last-child)::after {
+        content: "";
+        display: block;
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        margin: 30px auto 0;
+        border-radius: 2px;
+      }
+
+      .key-takeaways-section {
+        padding: 40px;
+        background: white;
+      }
+
+      .key-takeaways-section h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #000;
       }
 
       .takeaways-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
       }
-    }
-  `]
+
+      .takeaway-card {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #007bff;
+        transition: transform 0.2s ease;
+      }
+
+      .takeaway-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .takeaway-card h4 {
+        margin: 0 0 10px 0;
+        color: #000;
+      }
+
+      .takeaway-card p {
+        margin: 0;
+        color: #000;
+        line-height: 1.5;
+      }
+
+      .article-note {
+        background: #e8f5e8;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #28a745;
+        text-align: center;
+      }
+
+      .article-note p {
+        margin: 0;
+        color: #000;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .sidebar-nav {
+          width: 100%;
+          height: auto;
+          position: relative;
+        }
+
+        .app-main {
+          margin-left: 0;
+        }
+
+        .nav-sections {
+          display: flex;
+          overflow-x: auto;
+          padding: 10px;
+        }
+
+        .nav-link {
+          white-space: nowrap;
+          min-width: 120px;
+          justify-content: center;
+        }
+
+        .page-header h1 {
+          font-size: 2rem;
+        }
+
+        .takeaways-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    `,
+  ],
 })
 export class App implements OnInit {
   activeSection = "home";
@@ -427,7 +435,7 @@ export class App implements OnInit {
   ngOnInit() {
     // Ensure we start at the top with home active
     this.activeSection = "home";
-    
+
     // Set up intersection observer for active section tracking
     // Delay observer setup to prevent initial triggering
     setTimeout(() => {
@@ -439,9 +447,9 @@ export class App implements OnInit {
             }
           });
         },
-        { 
+        {
           threshold: 0.3,
-          rootMargin: '-10% 0px -70% 0px'
+          rootMargin: "-10% 0px -70% 0px",
         }
       );
 
@@ -457,7 +465,7 @@ export class App implements OnInit {
   scrollToSection(sectionId: string) {
     // Update active section immediately when clicked
     this.activeSection = sectionId;
-    
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
@@ -480,4 +488,3 @@ bootstrapApplication(App, {
     }),
   ],
 });
-
