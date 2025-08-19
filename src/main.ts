@@ -385,9 +385,6 @@ export class App implements OnInit {
   ];
 
   ngOnInit() {
-    // Set initial active section to signals (first section)
-    this.activeSection = "signals";
-    
     // Set up intersection observer for active section tracking
     const observer = new IntersectionObserver(
       (entries) => {
@@ -399,7 +396,7 @@ export class App implements OnInit {
       },
       { 
         threshold: 0.3,
-        rootMargin: '-20% 0px -20% 0px' // Only trigger when section is more centered in viewport
+        rootMargin: '-10% 0px -70% 0px' // Only trigger when section is near the top
       }
     );
 
@@ -410,10 +407,7 @@ export class App implements OnInit {
           observer.observe(element);
         }
       });
-      
-      // Ensure we start at the top
-      window.scrollTo(0, 0);
-    }, 1000);
+    }, 100);
   }
 
   scrollToSection(sectionId: string) {
