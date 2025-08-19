@@ -666,13 +666,11 @@ export class FormsSignalsDemoComponent {
     const totalControls = allControls.length;
     const validControls = allControls.filter(control => control.valid).length;
     
-    const touchedFields = allControls
-      .filter(control => control.touched)
-      .map((_, index) => `field-${index}`);
+    const touchedFields: string[] = [];
+    const dirtyFields: string[] = [];
     
-    const dirtyFields = allControls
-      .filter(control => control.dirty)
-      .map((_, index) => `field-${index}`);
+    // Collect touched and dirty field paths
+    this.collectFieldStates(form, touchedFields, dirtyFields, '');
 
     const errors: Record<string, string[]> = {};
     this.collectErrors(form, errors, '');
@@ -722,6 +720,23 @@ export class FormsSignalsDemoComponent {
     });
   }
 
+  private collectFieldStates(formGroup: FormGroup, touchedFields: string[], dirtyFields: string[], prefix: string) {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+      
+      if (control instanceof FormGroup) {
+        this.collectFieldStates(control, touchedFields, dirtyFields, fullKey);
+      } else if (control) {
+        if (control.touched) {
+          touchedFields.push(fullKey);
+        }
+        if (control.dirty) {
+          dirtyFields.push(fullKey);
+        }
+      }
+    });
+  }
   hasError(fieldPath: string): boolean {
     const control = this.userForm.get(fieldPath);
     return !!(control && control.errors && control.touched);
