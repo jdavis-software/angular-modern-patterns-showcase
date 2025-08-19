@@ -1285,6 +1285,8 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
 
   private updateMetrics() {
     const now = performance.now();
+    const itemCount = this.testItemCount();
+    const strategy = this.activeStrategy;
     
     // Calculate FPS
     if (this.lastFrameTime) {
@@ -1300,13 +1302,29 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
       ? Math.round(this.fpsFrames.reduce((a, b) => a + b, 0) / this.fpsFrames.length)
       : 60;
 
-    const renderTime = Math.round(Math.random() * 50 + 10);
+    // More realistic render time simulation based on item count and strategy
+    const baseRenderTime = Math.max(8, itemCount / 100); // Base time increases with item count
+    
+    // Strategy performance multipliers
+    const strategyMultipliers = {
+      'default': 1.0 + (itemCount / 5000), // Gets worse with more items
+      'onpush': 0.4 + (itemCount / 10000), // Much better, slight degradation
+      'signals': 0.3 + (itemCount / 15000), // Best performance
+      'virtual': 0.2 // Constant performance regardless of item count
+    };
+    
+    const multiplier = strategyMultipliers[strategy as keyof typeof strategyMultipliers] || 1.0;
+    const simulatedRenderTime = Math.round(baseRenderTime * multiplier + Math.random() * 5);
+    
+    // Simulate FPS impact from render time
+    const simulatedFps = Math.max(15, Math.min(60, 60 - Math.floor(simulatedRenderTime / 2)));
+    
     const memoryUsage = Math.round(((performance as any).memory?.usedJSHeapSize || 0) / 1024 / 1024);
     
     const metrics: PerformanceMetrics = {
-      renderTime,
+      renderTime: simulatedRenderTime,
       memoryUsage,
-      fpsAverage: avgFps,
+      fpsAverage: simulatedFps,
       changeDetectionCycles: Math.round(Math.random() * 10 + 1),
       domNodes: document.querySelectorAll('*').length,
       timestamp: new Date()
@@ -1381,9 +1399,31 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
 
   getPerformanceLevel(): string {
     const metrics = this.currentMetrics();
-    if (metrics.renderTime < 16 && metrics.fpsAverage > 55) return 'excellent';
-    if (metrics.renderTime < 33 && metrics.fpsAverage > 45) return 'good';
-    if (metrics.renderTime < 50 && metrics.fpsAverage > 30) return 'fair';
+    const itemCount = this.testItemCount();
+    const strategy = this.activeStrategy;
+    
+    // Calculate performance based on item count and strategy
+    let expectedRenderTime = 16; // Base 60fps target
+    
+    // Adjust expectations based on item count
+    if (itemCount > 5000) expectedRenderTime = 33; // 30fps acceptable for large datasets
+    if (itemCount > 8000) expectedRenderTime = 50; // 20fps acceptable for very large datasets
+    
+    // Strategy multipliers for expected performance
+    const strategyMultipliers = {
+      'default': 1.0,
+      'onpush': 0.6,
+      'signals': 0.4,
+      'virtual': 0.2
+    };
+    
+    const multiplier = strategyMultipliers[strategy as keyof typeof strategyMultipliers] || 1.0;
+    const adjustedExpectedTime = expectedRenderTime * multiplier;
+    
+    // More realistic thresholds
+    if (metrics.renderTime <= adjustedExpectedTime && metrics.fpsAverage >= 55) return 'excellent';
+    if (metrics.renderTime <= adjustedExpectedTime * 1.5 && metrics.fpsAverage >= 45) return 'good';
+    if (metrics.renderTime <= adjustedExpectedTime * 2.5 && metrics.fpsAverage >= 30) return 'fair';
     return 'poor';
   }
 
