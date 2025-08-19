@@ -177,7 +177,11 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
           </div>
         </section>
       </main>
-
+    </div>
+  `,
+  styles: [`
+    .key-takeaways-section .article-note {
+      background: #f8f9fa;
       padding: 20px;
       border-radius: 8px;
       border-left: 4px solid #3498db;
@@ -190,7 +194,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
       line-height: 1.6;
       color: #000;
     }
-    `,
+    `
   ],
 })
 export class App implements OnInit {
