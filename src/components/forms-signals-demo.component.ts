@@ -485,28 +485,40 @@ interface FormValidationState {
       border-radius: 4px;
       font-size: 14px;
       transition: all 0.2s;
+      background: white;
+      color: #000;
     }
 
     .form-input:focus, .form-select:focus {
       outline: none;
       border-color: #007bff;
       box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      background: white;
+      color: #000;
     }
 
     .form-input.error, .form-select.error {
       border-color: #dc3545;
+      background: white;
+      color: #000;
     }
 
     .form-input.error:focus, .form-select.error:focus {
       box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+      background: white;
+      color: #000;
     }
 
     .form-input.success, .form-select.success {
       border-color: #28a745;
+      background: white;
+      color: #000;
     }
 
     .form-input.success:focus, .form-select.success:focus {
       box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+      background: white;
+      color: #000;
     }
 
     .checkbox-field {

@@ -399,15 +399,21 @@ interface TabItem {
       outline: none;
       border-color: #007bff;
       box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      background: white;
+      color: #000;
     }
 
     .form-input[aria-invalid="true"] {
       border-color: #dc3545;
+      background: white;
+      color: #000;
     }
 
     .form-input[aria-invalid="true"]:focus {
       border-color: #dc3545;
       box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+      background: white;
+      color: #000;
     }
 
     .help-text {
