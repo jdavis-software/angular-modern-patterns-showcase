@@ -177,136 +177,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
           </div>
         </section>
       </main>
-    </div>
-  `,
-  styles: [`
-    .showcase-app {
-      display: flex;
-      min-height: 100vh;
-      background: #f8f9fa;
-    }
 
-    .sidebar-nav {
-      width: 280px;
-      background: white;
-      box-shadow: 2px 0 4px rgba(0,0,0,0.1);
-      position: fixed;
-      height: 100vh;
-      overflow-y: auto;
-      z-index: 1000;
-    }
-
-    .sidebar-header {
-      padding: 20px;
-      border-bottom: 1px solid #e9ecef;
-      background: #007bff;
-      color: white;
-    }
-
-    .sidebar-header h2 {
-      margin: 0;
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
-
-    .nav-sections {
-      padding: 20px 0;
-    }
-
-    .nav-link {
-      display: flex;
-      align-items: center;
-      padding: 12px 20px;
-      text-decoration: none;
-      color: #495057;
-      transition: all 0.2s ease;
-      border-left: 3px solid transparent;
-    }
-
-    .nav-link:hover {
-      background: #f8f9fa;
-      color: #007bff;
-      border-left-color: #007bff;
-    }
-
-    .nav-link.active {
-      background: rgba(0, 123, 255, 0.1);
-      color: #007bff;
-      border-left-color: #007bff;
-      font-weight: 500;
-    }
-
-    .nav-icon {
-      margin-right: 12px;
-      font-size: 1.2rem;
-    }
-
-    .nav-text {
-      font-size: 0.95rem;
-    }
-
-    .app-main {
-      margin-left: 280px;
-      flex: 1;
-      padding: 0;
-    }
-
-    .page-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 60px 40px;
-      text-align: center;
-    }
-
-    .page-header h1 {
-      margin: 0 0 15px 0;
-      font-size: 2.5rem;
-      font-weight: 700;
-    }
-
-    .page-subtitle {
-      margin: 0;
-      font-size: 1.2rem;
-      opacity: 0.9;
-      max-width: 800px;
-      margin: 0 auto;
-      line-height: 1.5;
-    }
-
-    .showcase-section {
-      padding: 40px;
-      border-bottom: 1px solid #e9ecef;
-    }
-
-    .showcase-section:last-child {
-      border-bottom: none;
-    }
-
-    .key-takeaways-section {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .key-takeaways-section h2 {
-      text-align: center;
-      margin-bottom: 40px;
-      color: #000;
-      font-size: 2rem;
-    }
-
-    .key-takeaways-section .takeaways-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .key-takeaways-section .takeaway-card {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border-left: 4px solid #007bff;
     }
 
     .key-takeaways-section .takeaway-card h4 {
@@ -335,7 +206,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
       line-height: 1.6;
       color: #000;
     }
-    `
+    `,
   ],
 })
 export class App implements OnInit {
