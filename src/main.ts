@@ -177,23 +177,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
           </div>
         </section>
       </main>
-    </div>
-  `,
-  styles: [`
-    .key-takeaways-section .takeaway-card h4 {
-      margin: 0 0 10px 0;
-      color: #000;
-      font-size: 1.1rem;
-    }
 
-    .key-takeaways-section .takeaway-card p {
-      margin: 0;
-      color: #000;
-      line-height: 1.5;
-    }
-
-    .key-takeaways-section .article-note {
-      background: rgba(52, 152, 219, 0.1);
       padding: 20px;
       border-radius: 8px;
       border-left: 4px solid #3498db;
@@ -206,7 +190,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
       line-height: 1.6;
       color: #000;
     }
-    `
+    `,
   ],
 })
 export class App implements OnInit {
