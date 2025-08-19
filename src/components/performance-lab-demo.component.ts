@@ -247,6 +247,7 @@ interface TestItem {
           <div class="performance-chart" #performanceChart>
             <canvas #chartCanvas width="800" height="200"></canvas>
           </div>
+          <div #stressContainer style="display: none"></div>
         </div>
       </div>
 
@@ -1053,6 +1054,7 @@ export class PerformanceLabDemoComponent
   @ViewChild("chartCanvas") chartCanvas!: ElementRef<HTMLCanvasElement>;
   BarChart3Icon = BarChart3;
   @ViewChild("performanceChart") performanceChart!: ElementRef;
+  @ViewChild("stressContainer") stressContainer!: ElementRef<HTMLDivElement>;
 
   // Test configuration
   testScale = "medium";
@@ -1391,9 +1393,55 @@ export class PerformanceLabDemoComponent
   }
 
   triggerStressTest() {
-    // Simulate heavy operations
-    for (let i = 0; i < 1000; i++) {
+    // Perform CPU and memory intensive work to highlight performance metrics
+    const data: number[] = [];
+
+    // Allocate a large array and perform expensive calculations
+    for (let i = 0; i < 10_000; i++) {
+      data.push(Math.random());
+    }
+
+    for (let i = 0; i < 20; i++) {
+      // Sorting large arrays is CPU heavy
+      data.sort(() => Math.random() - 0.5);
+      // Additional math operations to keep the CPU busy
+      for (let j = 0; j < data.length; j++) {
+        data[j] = Math.sqrt(data[j] * Math.random());
+      }
+    }
+
+    // Trigger numerous component updates to stress change detection
+    for (let i = 0; i < 100; i++) {
       this.updateRandomItems();
+    }
+
+    // Inflate the DOM with temporary nodes to visualize stress
+    if (this.stressContainer?.nativeElement) {
+      const fragment = document.createDocumentFragment();
+      for (let i = 0; i < 1000; i++) {
+        const div = document.createElement("div");
+        div.textContent = `stress-${i}`;
+        fragment.appendChild(div);
+      }
+      this.stressContainer.nativeElement.appendChild(fragment);
+
+      // Clean up after a short delay to avoid unbounded growth
+      setTimeout(() => {
+        this.stressContainer.nativeElement.innerHTML = "";
+        if (this.isMonitoring()) {
+          this.updateMetrics();
+          this.updateChart();
+        }
+      }, 3000);
+    }
+
+    // Release memory
+    data.length = 0;
+
+    // Update metrics if monitoring is active
+    if (this.isMonitoring()) {
+      this.updateMetrics();
+      this.updateChart();
     }
   }
 
