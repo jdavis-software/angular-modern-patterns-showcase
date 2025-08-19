@@ -178,22 +178,6 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
         </section>
       </main>
 
-  sections = [
-    { id: "signals", title: "Signals", icon: "🎯" },
-    { id: "ngrx", title: "NgRx", icon: "🏪" },
-    { id: "rxjs", title: "RxJS", icon: "🌊" },
-    { id: "web-components", title: "Web Components", icon: "🧩" },
-    { id: "performance", title: "Performance", icon: "⚡" },
-    { id: "accessibility", title: "Accessibility", icon: "♿" },
-    { id: "forms-signals", title: "Forms + Signals", icon: "📝" },
-    { id: "ssr-hydration", title: "SSR & Hydration", icon: "🚀" },
-    { id: "router-signals", title: "Router + Signals", icon: "🧭" },
-    { id: "performance-lab", title: "Performance Lab", icon: "⚡" },
-    { id: "key-takeaways", title: "Key Takeaways", icon: "🎯" },
-  ];
-
-  activeSection = "signals";
-
   ngOnInit() {
     // Set up intersection observer for active section tracking
     const observer = new IntersectionObserver(
@@ -240,6 +224,3 @@ bootstrapApplication(App, {
     }),
   ],
 });
-
-}
-)
