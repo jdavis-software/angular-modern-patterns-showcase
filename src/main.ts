@@ -36,7 +36,20 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
   standalone: true,
   imports: [
     CommonModule,
-    LucideAngularModule,
+    LucideAngularModule.pick({ 
+      Home, 
+      Zap, 
+      Database, 
+      Waves, 
+      Puzzle, 
+      Gauge, 
+      Accessibility, 
+      FileText, 
+      Server, 
+      Route, 
+      BarChart3, 
+      Target 
+    }),
     SignalsDemoComponent,
     NgRxDemoComponent,
     RxJSDemoComponent,
