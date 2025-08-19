@@ -686,6 +686,14 @@ export class RouterSignalsDemoComponent implements OnInit {
     return Math.round((cacheHits / history.length) * 100);
   });
 
+  // Effect to update navigation state (moved to class property for proper injection context)
+  private navigationEffect = effect(() => {
+    const currentData = this.currentRouteData();
+    if (currentData) {
+      this.updateNavigationState(currentData);
+    }
+  });
+
   ngOnInit() {
     // Convert router events to signals
     const navigationEnd$ = this.router.events.pipe(
@@ -695,14 +703,6 @@ export class RouterSignalsDemoComponent implements OnInit {
 
     // Track navigation changes
     toSignal(navigationEnd$, { initialValue: null });
-
-    // Effect to update navigation state
-    effect(() => {
-      const currentData = this.currentRouteData();
-      if (currentData) {
-        this.updateNavigationState(currentData);
-      }
-    });
 
     // Initialize with dashboard
     setTimeout(() => {

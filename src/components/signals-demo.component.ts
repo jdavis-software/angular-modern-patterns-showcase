@@ -274,16 +274,14 @@ export class SignalsDemoComponent {
 
   finalTotal = computed(() => this.totalPrice() - this.discount());
 
-  constructor() {
-    // Effect - runs when signals change
-    effect(() => {
-      console.log('🛒 Cart updated:', {
-        items: this.totalItems(),
-        total: this.finalTotal(),
-        cartContents: this.cartItems()
-      });
+  // Effect - runs when signals change (moved to class property for proper injection context)
+  private cartEffect = effect(() => {
+    console.log('🛒 Cart updated:', {
+      items: this.totalItems(),
+      total: this.finalTotal(),
+      cartContents: this.cartItems()
     });
-  }
+  });
 
   addItem() {
     if (!this.newItemName.trim()) return;

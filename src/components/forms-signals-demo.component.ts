@@ -688,13 +688,11 @@ export class FormsSignalsDemoComponent {
 
   totalFields = computed(() => this.getAllControls(this.userForm).length);
 
-  constructor() {
-    // Effect to log form changes
-    effect(() => {
-      console.log('📝 Form validation state:', this.formValidation());
-      console.log('📊 Form data:', this.formData());
-    });
-  }
+  // Effect to log form changes (moved to class property for proper injection context)
+  private formEffect = effect(() => {
+    console.log('📝 Form validation state:', this.formValidation());
+    console.log('📊 Form data:', this.formData());
+  });
 
   private getAllControls(formGroup: FormGroup): AbstractControl[] {
     let controls: AbstractControl[] = [];

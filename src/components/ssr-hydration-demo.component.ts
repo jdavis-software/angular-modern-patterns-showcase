@@ -522,6 +522,9 @@ export class SSRHydrationDemoComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
   private hydrationStartTime = Date.now();
 
+  // Signal for stable time display to prevent ExpressionChangedAfterItHasBeenCheckedError
+  currentTimeDisplay = signal<string>('');
+
   // Platform detection signals
   platformInfo = signal<PlatformInfo>({
     isBrowser: isPlatformBrowser(this.platformId),
@@ -643,6 +646,11 @@ export class SSRHydrationDemoComponent implements OnInit {
     return items.filter(item => item.category === category);
   });
 
+  // Effect to log platform changes (moved to class property for proper injection context)
+  private platformEffect = effect(() => {
+    console.log('🚀 Platform info:', this.platformInfo());
+  });
+
   ngOnInit() {
     // Update platform info after hydration
     if (isPlatformBrowser(this.platformId)) {
@@ -659,12 +667,15 @@ export class SSRHydrationDemoComponent implements OnInit {
         this.updateChecklistItem('performance-metrics', 'pass', 
           `Hydration completed in ${hydrationTime}ms - Good performance!`);
       }, 1000);
-    }
 
-    // Effect to log platform changes
-    effect(() => {
-      console.log('🚀 Platform info:', this.platformInfo());
-    });
+      // Update time display every second to prevent ExpressionChangedAfterItHasBeenCheckedError
+      setInterval(() => {
+        this.currentTimeDisplay.set(new Date().toLocaleTimeString());
+      }, 1000);
+      
+      // Set initial time
+      this.currentTimeDisplay.set(new Date().toLocaleTimeString());
+    }
   }
 
   setActiveCategory(category: string) {
@@ -696,7 +707,7 @@ export class SSRHydrationDemoComponent implements OnInit {
   }
 
   getCurrentTime(): string {
-    return new Date().toLocaleTimeString();
+    return this.currentTimeDisplay() || new Date().toLocaleTimeString();
   }
 
   getThemeFromStorage(): string {

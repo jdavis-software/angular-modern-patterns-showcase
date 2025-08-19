@@ -1163,14 +1163,12 @@ export class PerformanceLabDemoComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.generateTestData();
-    
-    // Effect to update metrics when monitoring
-    effect(() => {
-      if (this.isMonitoring()) {
-        this.updateMetrics();
-      }
-    });
-  }
+  // Effect to update metrics when monitoring (moved to class property for proper injection context)
+  private monitoringEffect = effect(() => {
+    if (this.isMonitoring()) {
+      this.updateMetrics();
+    }
+  });
 
   ngAfterViewInit() {
     this.initializeChart();
