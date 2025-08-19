@@ -177,27 +177,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
           </div>
         </section>
       </main>
-    </div>
-  `,
-  styles: [`
-    .key-takeaways-section .article-note {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 8px;
-      border-left: 4px solid #3498db;
-      text-align: center;
-    }
 
-    .key-takeaways-section .article-note p {
-      margin: 0;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #000;
-    }
-    `
-  ],
-})
-export class App implements OnInit {
   sections = [
     { id: "signals", title: "Signals", icon: "🎯" },
     { id: "ngrx", title: "NgRx", icon: "🏪" },
