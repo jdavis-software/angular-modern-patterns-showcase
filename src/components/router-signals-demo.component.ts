@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, signal, effect, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, computed, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { LucideAngularModule, Route } from 'lucide-angular';
@@ -624,9 +624,11 @@ interface PrefetchStrategy {
     }
   `]
 })
-export class RouterSignalsDemoComponent implements OnInit {
+export class RouterSignalsDemoComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   RouteIcon = Route;
+
+  private timeIntervalId?: ReturnType<typeof setInterval>;
 
   // Navigation state signals
   navigationState = signal<NavigationState>({
@@ -713,7 +715,7 @@ export class RouterSignalsDemoComponent implements OnInit {
     }, 500);
 
     // Update display time every second to prevent expression changed errors
-    setInterval(() => {
+    this.timeIntervalId = setInterval(() => {
       this.currentTimeForDisplay.set(Date.now());
     }, 1000);
   }
@@ -848,5 +850,11 @@ export class RouterSignalsDemoComponent implements OnInit {
     if (minutes < 60) return `${minutes}m ago`;
     const hours = Math.floor(minutes / 60);
     return `${hours}h ago`;
+  }
+
+  ngOnDestroy(): void {
+    if (this.timeIntervalId) {
+      clearInterval(this.timeIntervalId);
+    }
   }
 }

@@ -1,6 +1,6 @@
-import "@angular/compiler";
 import { Component, OnInit } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
+import { provideRouter } from "@angular/router";
 import { provideStore } from "@ngrx/store";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { CommonModule } from "@angular/common";
@@ -22,7 +22,7 @@ import {
 import { appReducer } from "./store/app.state";
 import { SignalsDemoComponent } from "./components/signals-demo.component";
 import { NgRxDemoComponent } from "./components/ngrx-demo.component";
-import { RxJSDemoComponent } from "./components/rxjs-demo.component";
+import { RxjsDemoComponent } from "./components/rxjs-demo.component";
 import { WebComponentsDemoComponent } from "./components/web-components-demo.component";
 import { PerformanceDemoComponent } from "./components/performance-demo.component";
 import { AccessibilityDemoComponent } from "./components/accessibility-demo.component";
@@ -39,7 +39,7 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
     LucideAngularModule,
     SignalsDemoComponent,
     NgRxDemoComponent,
-    RxJSDemoComponent,
+    RxjsDemoComponent,
     WebComponentsDemoComponent,
     PerformanceDemoComponent,
     AccessibilityDemoComponent,
@@ -469,6 +469,7 @@ export class App implements OnInit {
 }
 bootstrapApplication(App, {
   providers: [
+    provideRouter([]),
     provideStore({ app: appReducer }),
     provideStoreDevtools({
       maxAge: 25,

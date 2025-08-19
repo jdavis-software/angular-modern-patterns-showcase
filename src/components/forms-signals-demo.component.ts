@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { LucideAngularModule, FileText } from 'lucide-angular';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, startWith, combineLatest } from 'rxjs';
+import { startWith } from 'rxjs';
 
 interface UserFormModel {
   personalInfo: {
