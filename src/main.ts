@@ -300,6 +300,22 @@ import { PerformanceLabDemoComponent } from "./components/performance-lab-demo.c
       margin: 0;
     }
 
+    .showcase-section:not(:last-child) {
+      border-bottom: 3px solid #e9ecef;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+    }
+
+    .showcase-section:not(:last-child)::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      margin: 30px auto 0;
+      border-radius: 2px;
+    }
+
     .key-takeaways-section {
       padding: 40px;
       background: white;
